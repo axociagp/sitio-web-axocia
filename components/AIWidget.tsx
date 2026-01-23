@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Mic, MicOff, MessageSquare, X, Send, Activity, Terminal } from 'lucide-react';
-import { useMultimodalLive } from '../hooks/useMultimodalLive';
+import { useMultimodalLive } from '../src/hooks/useMultimodalLive';
 
 export function AIWidget() {
     const [isOpen, setIsOpen] = useState(false);
@@ -167,3 +167,4 @@ export function AIWidget() {
         </div>
     );
 }
+
