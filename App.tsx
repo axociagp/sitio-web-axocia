@@ -141,17 +141,20 @@ function Layout() {
 
   return (
     <>
-      {/* GLOBAL NAVIGATION BUTTON - Fixed Z-Index and Colors */}
-      <div className="fixed top-8 right-8 md:top-12 md:right-12 z-[9999]">
+      {/* GLOBAL NAVIGATION BUTTON - Dynamic Contrast Fix */}
+      <div className="fixed top-8 right-8 md:top-12 md:right-12 z-[9999] mix-blend-difference">
         <button
-          onClick={() => setIsMenuOpen(true)}
+          onClick={() => {
+            console.log("Menu clicked");
+            setIsMenuOpen(true);
+          }}
           className={`group flex items-center gap-3 focus:outline-none transition-all duration-300 ${isMenuOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
           aria-label="Abrir Menú"
         >
-          <span className="hidden md:block font-jakarta text-[10px] tracking-[0.2em] uppercase font-bold text-white mix-blend-difference group-hover:tracking-[0.3em] transition-all duration-300">
+          <span className="hidden md:block font-jakarta text-[10px] tracking-[0.2em] uppercase font-bold text-white group-hover:tracking-[0.3em] transition-all duration-300">
             Menu
           </span>
-          <div className="p-2 bg-black border border-white/20 hover:bg-white hover:text-black hover:border-transparent text-white transition-all duration-300 shadow-lg">
+          <div className="p-2 bg-white text-black transition-transform duration-300 shadow-lg group-hover:scale-105">
             <Menu size={18} strokeWidth={1.5} />
           </div>
         </button>
@@ -159,11 +162,11 @@ function Layout() {
 
       {/* DRAWER MENU */}
       <div
-        className={`fixed inset-0 z-[200] bg-black/20 backdrop-blur-[2px] transition-opacity duration-500 ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed inset-0 z-[10000] bg-black/20 backdrop-blur-[2px] transition-opacity duration-500 ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         onClick={() => setIsMenuOpen(false)}
       />
       <div
-        className={`fixed top-0 right-0 z-[210] h-full w-full md:w-[480px] bg-white shadow-2xl transform transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] flex flex-col ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`fixed top-0 right-0 z-[10001] h-full w-full md:w-[480px] bg-white shadow-2xl transform transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] flex flex-col ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
         <div className="flex-none flex justify-between items-center px-8 py-8 md:px-12 md:py-10 border-b border-gray-100">
           <span className="font-jakarta text-[9px] tracking-[0.2em] uppercase text-gray-400">
