@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Mic, MicOff, MessageSquare, X, Send, Activity, Terminal } from 'lucide-react';
 import { useMultimodalLive } from '../src/hooks/useMultimodalLive';
-
+declare const process: any;
 export function AIWidget() {
     const [isOpen, setIsOpen] = useState(false);
     const [context, setContext] = useState<string>("");
@@ -167,4 +167,5 @@ export function AIWidget() {
         </div>
     );
 }
+
 
