@@ -141,8 +141,8 @@ function Layout() {
 
   return (
     <>
-      {/* GLOBAL NAVIGATION BUTTON - Dynamic Contrast Fix */}
-      <div className="fixed top-8 right-8 md:top-12 md:right-12 z-[9999] mix-blend-difference">
+      {/* GLOBAL NAVIGATION BUTTON - Dynamic Contrast Fix & Click Safety */}
+      <div className="fixed top-8 right-8 md:top-12 md:right-12 z-[9999]">
         <button
           onClick={() => {
             console.log("Menu clicked");
@@ -151,10 +151,11 @@ function Layout() {
           className={`group flex items-center gap-3 focus:outline-none transition-all duration-300 ${isMenuOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
           aria-label="Abrir Menú"
         >
-          <span className="hidden md:block font-jakarta text-[10px] tracking-[0.2em] uppercase font-bold text-white group-hover:tracking-[0.3em] transition-all duration-300">
+          {/* Apply mix-blend-difference individually to ensure clickability of container */}
+          <span className="hidden md:block font-jakarta text-[10px] tracking-[0.2em] uppercase font-bold text-white mix-blend-difference group-hover:tracking-[0.3em] transition-all duration-300">
             Menu
           </span>
-          <div className="p-2 bg-white text-black transition-transform duration-300 shadow-lg group-hover:scale-105">
+          <div className="p-2 bg-white text-black mix-blend-difference transition-transform duration-300 shadow-lg group-hover:scale-105">
             <Menu size={18} strokeWidth={1.5} />
           </div>
         </button>
@@ -162,11 +163,18 @@ function Layout() {
 
       {/* DRAWER MENU */}
       <div
-        className={`fixed inset-0 z-[10000] bg-black/20 backdrop-blur-[2px] transition-opacity duration-500 ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed inset-0 z-[10000] bg-black/20 backdrop-blur-[2px] transition-opacity duration-500`}
+        style={{
+          opacity: isMenuOpen ? 1 : 0,
+          pointerEvents: isMenuOpen ? 'auto' : 'none'
+        }}
         onClick={() => setIsMenuOpen(false)}
       />
       <div
-        className={`fixed top-0 right-0 z-[10001] h-full w-full md:w-[480px] bg-white shadow-2xl transform transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] flex flex-col ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`fixed top-0 right-0 z-[10001] h-full w-full md:w-[480px] bg-white shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] flex flex-col`}
+        style={{
+          transform: isMenuOpen ? 'translateX(0)' : 'translateX(100%)'
+        }}
       >
         <div className="flex-none flex justify-between items-center px-8 py-8 md:px-12 md:py-10 border-b border-gray-100">
           <span className="font-jakarta text-[9px] tracking-[0.2em] uppercase text-gray-400">
