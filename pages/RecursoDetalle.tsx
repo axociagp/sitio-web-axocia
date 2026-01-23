@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowLeft, Clock, Calendar } from 'lucide-react';
-import { Link } from '../App';
+import { Link } from '../components/Router';
 import { SEO } from '../components/SEO';
 
 // Minimal block renderer
