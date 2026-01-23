@@ -6,18 +6,16 @@ import Diagnostico from './pages/Diagnostico';
 import Recursos from './pages/Recursos';
 import RecursoDetalle from './pages/RecursoDetalle';
 import { AIWidget } from './components/AIWidget';
-import { Router, useLocation } from './src/lib/router';
-import { NavigationMenu } from './components/NavigationMenu';
+import Navbar from './components/Navbar';
+import { Router, useLocation } from './components/Router';
 
 // Routes Logic
 function Routes({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
   const routes = React.Children.toArray(children);
 
-  // 1. Exact Match
   let match = routes.find((child) => React.isValidElement(child) && child.props.path === pathname) as React.ReactElement | undefined;
 
-  // 2. Dynamic Match (Simple /recursos/:slug)
   if (!match) {
     if (pathname.startsWith('/recursos/') && pathname.split('/').length > 2) {
       match = routes.find((child) => React.isValidElement(child) && child.props.path === '/recursos/:slug') as React.ReactElement | undefined;
@@ -31,7 +29,6 @@ function Route({ path, element }: { path: string; element: React.ReactNode }) {
   return null;
 }
 
-// Scroll to top
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -40,17 +37,9 @@ function ScrollToTop() {
   return null;
 }
 
-export default function App() {
-  return (
-    <Router>
-      <ScrollToTop />
-      <Layout />
-    </Router>
-  );
-}
-
+// Layout Wrapper
 function Layout() {
-  // LENIS SMOOTH SCROLL INIT
+  // Lenis Init
   useEffect(() => {
     if (typeof window !== 'undefined' && window.innerWidth > 768) {
       const script = document.createElement('script');
@@ -83,10 +72,7 @@ function Layout() {
 
   return (
     <>
-      {/* NEW ISOLATED NAVIGATION COMPONENT */}
-      <NavigationMenu />
-
-      {/* PAGE CONTENT */}
+      <Navbar />
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -97,9 +83,16 @@ function Layout() {
           <Route path="/recursos/:slug" element={<RecursoDetalle />} />
         </Routes>
       </main>
-
-      {/* AI ASSISTANT */}
       <AIWidget />
     </>
+  );
+}
+
+export default function App() {
+  return (
+    <Router>
+      <ScrollToTop />
+      <Layout />
+    </Router>
   );
 }
