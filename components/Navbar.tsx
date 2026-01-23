@@ -1,3 +1,5 @@
+'use client'; // ESTA LÍNEA ES LA QUE ACTIVA EL CLIC EN VERCEL
+
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowUpRight, ArrowRight } from 'lucide-react';
 import { Link, useLocation } from './Router';
@@ -7,131 +9,54 @@ export default function Navbar() {
     const [isMounted, setIsMounted] = useState(false);
     const { pathname } = useLocation();
 
-    // Client-side only check
-    // Client-side only check
+    // Fix para asegurar que el código solo corre en el navegador
     useEffect(() => {
         setIsMounted(true);
     }, []);
 
-    // DEBUG VERIFICATION
-    useEffect(() => {
-        console.log('Navbar State:', isOpen);
-        // @ts-ignore
-        window._navbarState = isOpen;
-    }, [isOpen]);
-
-    // Close menu on navigation
-    useEffect(() => {
-        setIsOpen(false);
-    }, [pathname]);
-
-    // Lock body scroll
-    useEffect(() => {
-        if (isMounted) {
-            document.body.style.overflow = isOpen ? 'hidden' : 'unset';
-        }
-    }, [isOpen, isMounted]);
-
     if (!isMounted) return null;
-
-    const menuItems = [
-        { label: "Inicio", path: "/" },
-        { label: "Qué hacemos", path: "/que-hacemos" },
-        { label: "Cómo trabajamos", path: "/como-trabajamos" },
-        { label: "Diagnóstico", path: "/diagnostico" },
-        { label: "Recursos", path: "/recursos" },
-    ];
 
     return (
         <>
-            {/* 
-        HAMBURGER BUTTON 
-        Style: Swiss Design / High Contrast
-        Technical: mix-blend-mode: difference with text-white ensures visibility on any background.
-        Z-Index: 9999 (Highest application layer)
-      */}
-            <div className="fixed top-8 right-8 md:top-12 md:right-12 z-[9999] mix-blend-difference">
-                <button
-                    onClick={() => setIsOpen(!isOpen)} // Robust toggle
-                    className={`flex items-center gap-3 focus:outline-none transition-opacity duration-300 cursor-pointer ${isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
-                    aria-label="Abrir Menú"
-                >
-                    <span className="hidden md:block font-jakarta text-[10px] tracking-[0.2em] uppercase font-bold text-white hover:tracking-[0.3em] transition-all duration-300">
-                        Menu
-                    </span>
-                    <div className="p-2 bg-white text-black transition-transform duration-300 shadow-lg hover:scale-105">
-                        <Menu size={18} strokeWidth={1.5} />
-                    </div>
-                </button>
-            </div>
-
-            {/* OVERLAY */}
-            <div
-                className={`fixed inset-0 z-[10000] bg-black/20 backdrop-blur-[2px] transition-opacity duration-500 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-                onClick={() => setIsOpen(false)}
-            />
-
-            {/* DRAWER PANEL */}
-            <div
-                className={`fixed top-0 right-0 z-[10001] h-full w-full md:w-[480px] bg-white shadow-2xl flex flex-col transform transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
-            >
-                <div className="flex-none flex justify-between items-center px-8 py-8 md:px-12 md:py-10 border-b border-gray-100">
-                    <span className="font-jakarta text-[9px] tracking-[0.2em] uppercase text-gray-400">
-                        Navegación
-                    </span>
-                    <button
-                        onClick={() => setIsOpen(false)}
-                        className="group flex items-center gap-2 hover:opacity-70 transition-opacity"
-                        aria-label="Cerrar Menú"
-                    >
-                        <span className="font-jakarta text-[9px] tracking-[0.2em] uppercase text-black hidden sm:block">Cerrar</span>
-                        <X size={20} strokeWidth={1} className="text-black" />
-                    </button>
-                </div>
-
-                <nav className="flex-1 flex flex-col justify-center px-8 md:px-12 py-8 overflow-y-auto">
-                    <ul className="flex flex-col gap-0">
-                        {menuItems.map((item, index) => (
-                            <li key={index} className="border-b border-gray-100 last:border-none">
-                                <Link
-                                    to={item.path}
-                                    className="group flex items-center justify-between py-5 md:py-6 w-full text-left"
-                                >
-                                    <div className="flex items-baseline gap-6">
-                                        <span className="font-jakarta text-[10px] text-gray-300 font-medium w-4 group-hover:text-[#6C5CE7] transition-colors">
-                                            0{index + 1}
-                                        </span>
-                                        <span className="font-space-grotesk font-medium text-xl md:text-2xl text-[#1A1A1B] group-hover:translate-x-2 transition-transform duration-300 ease-out">
-                                            {item.label}
-                                        </span>
-                                    </div>
-                                    <ArrowUpRight
-                                        size={18}
-                                        strokeWidth={1}
-                                        className="text-gray-300 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-[#6C5CE7] transition-all duration-300"
-                                    />
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
-                </nav>
-
-                <div className="flex-none px-8 py-8 md:px-12 md:py-10 bg-[#F8F9FA] border-t border-gray-100">
-                    <Link
-                        to="/diagnostico"
-                        className="group block w-full text-left"
-                    >
-                        <div className="flex items-center justify-between mb-2">
-                            <span className="font-space-grotesk font-bold text-lg md:text-xl text-black group-hover:text-[#6C5CE7] transition-colors">
-                                Solicitar diagnóstico
-                            </span>
-                            <ArrowRight size={20} strokeWidth={1.5} className="text-black group-hover:translate-x-1 transition-transform" />
-                        </div>
-                        <p className="font-jakarta text-[10px] text-gray-400 uppercase tracking-widest group-hover:text-gray-600 transition-colors">
-                            Iniciar evaluación de infraestructura digital
-                        </p>
+            {/* HEADER CON CONTRASTE AUTOMÁTICO */}
+            <header className="fixed top-0 left-0 w-full z-[9999] p-6 mix-blend-difference">
+                <nav className="flex justify-between items-center max-w-7xl mx-auto">
+                    {/* LOGO - Se volverá negro sobre blanco automáticamente */}
+                    <Link to="/" onClick={() => setIsOpen(false)} className="text-white font-bold text-2xl tracking-tighter">
+                        AXOCIA
                     </Link>
-                </div>
+
+                    {/* BOTÓN HAMBURGUESA - Usamos text-white para que el blend mode funcione */}
+                    <button
+                        onClick={() => setIsOpen(!isOpen)}
+                        className="relative z-[10000] text-white focus:outline-none"
+                    >
+                        {isOpen ? <X size={32} /> : <Menu size={32} />}
+                    </button>
+                </nav>
+            </header>
+
+            {/* MENÚ DESPLEGABLE (OVERLAY) */}
+            <div className={`fixed inset-0 bg-black z-[9998] flex flex-col items-center justify-center transition-transform duration-500 ease-in-out ${isOpen ? 'translate-y-0' : '-translate-y-full'}`}>
+                <ul className="text-white text-center space-y-8">
+                    {[
+                        { name: 'Inicio', path: '/' },
+                        { name: 'Qué hacemos', path: '/que-hacemos' },
+                        { name: 'Cómo trabajamos', path: '/como-trabajamos' },
+                        { name: 'Diagnóstico', path: '/diagnostico' },
+                        { name: 'Recursos', path: '/recursos' }
+                    ].map((item) => (
+                        <li key={item.name}>
+                            <Link
+                                to={item.path}
+                                onClick={() => setIsOpen(false)}
+                                className="text-4xl md:text-6xl font-light hover:italic transition-all tracking-tight block"
+                            >
+                                {item.name}
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
             </div>
         </>
     );
