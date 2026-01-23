@@ -141,40 +141,37 @@ function Layout() {
 
   return (
     <>
-      {/* GLOBAL NAVIGATION BUTTON - Dynamic Contrast Fix & Click Safety */}
+      {/* GLOBAL NAVIGATION BUTTON - ROBUST IMPLEMENTATION */}
       <div className="fixed top-8 right-8 md:top-12 md:right-12 z-[9999]">
         <button
-          onClick={() => {
-            console.log("Menu clicked");
-            setIsMenuOpen(true);
-          }}
-          className={`group flex items-center gap-3 focus:outline-none transition-all duration-300 ${isMenuOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+          onClick={() => setIsMenuOpen(true)}
+          className={`group flex items-center gap-3 focus:outline-none transition-all duration-300 ${isMenuOpen ? 'opacity-0 pointer-events-none' : 'opacity-100 cursor-pointer'}`}
           aria-label="Abrir Menú"
         >
-          {/* Apply mix-blend-difference individually to ensure clickability of container */}
+          {/* TEXT: White text with difference blend mode = Inverts against background */}
           <span className="hidden md:block font-jakarta text-[10px] tracking-[0.2em] uppercase font-bold text-white mix-blend-difference group-hover:tracking-[0.3em] transition-all duration-300">
             Menu
           </span>
-          <div className="p-2 bg-white text-black mix-blend-difference transition-transform duration-300 shadow-lg group-hover:scale-105">
-            <Menu size={18} strokeWidth={1.5} />
+
+          {/* ICON CONTAINER: White Box with difference blend mode */}
+          {/* On White BG: Box becomes Black. On Black BG: Box becomes White. */}
+          <div className="relative p-2 bg-white mix-blend-difference transition-transform duration-300 shadow-lg group-hover:scale-105">
+            {/* ICON: Black color inside. 
+                Inside inverted box (Black visual): Icon inverts to White.
+                Inside inverted box (White visual): Icon inverts to Black. 
+            */}
+            <Menu size={18} strokeWidth={1.5} className="text-black" />
           </div>
         </button>
       </div>
 
-      {/* DRAWER MENU */}
+      {/* DRAWER MENU - CSS CLASSES RESTORED */}
       <div
-        className={`fixed inset-0 z-[10000] bg-black/20 backdrop-blur-[2px] transition-opacity duration-500`}
-        style={{
-          opacity: isMenuOpen ? 1 : 0,
-          pointerEvents: isMenuOpen ? 'auto' : 'none'
-        }}
+        className={`fixed inset-0 z-[10000] bg-black/20 backdrop-blur-[2px] transition-opacity duration-500 ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         onClick={() => setIsMenuOpen(false)}
       />
       <div
-        className={`fixed top-0 right-0 z-[10001] h-full w-full md:w-[480px] bg-white shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] flex flex-col`}
-        style={{
-          transform: isMenuOpen ? 'translateX(0)' : 'translateX(100%)'
-        }}
+        className={`fixed top-0 right-0 z-[10001] h-full w-full md:w-[480px] bg-white shadow-2xl transform transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] flex flex-col ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
         <div className="flex-none flex justify-between items-center px-8 py-8 md:px-12 md:py-10 border-b border-gray-100">
           <span className="font-jakarta text-[9px] tracking-[0.2em] uppercase text-gray-400">
