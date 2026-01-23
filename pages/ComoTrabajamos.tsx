@@ -1,5 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowDown, Zap, CircleDashed, Terminal, Eye, Layout, ShieldAlert, Activity, Infinity, CheckCircle2, Target, Users, Scale, SearchCode, AlertTriangle, Crosshair, FileSearch, PenTool, Layers, GitBranch, Box, Ruler, Power, Play, HardDrive, Server, MessageSquare, FileText, Radio, Wifi, Lock, ShieldCheck, Ban, ArrowRight, MapPin, Mail, Phone, Linkedin, Instagram, Facebook, Anchor, Compass, Columns, Calendar } from 'lucide-react';
+import {
+   ArrowDown, Zap, CircleDashed, Terminal, Eye, Layout, ShieldAlert, Activity,
+   Infinity, CheckCircle2, Target, Users, Scale, SearchCode, AlertTriangle,
+   Crosshair, FileSearch, PenTool, Layers, GitBranch, Box, Ruler, Power, Play,
+   HardDrive, Server, MessageSquare, FileText, Radio, Wifi, Lock, ShieldCheck,
+   Ban, ArrowRight, MapPin, Mail, Phone, Linkedin, Instagram, Facebook, Anchor,
+   Compass, Columns, Calendar, Settings, BarChart3, Check, XCircle
+} from 'lucide-react';
 import { TextReveal } from '../components/TextReveal';
 import { SEO } from '../components/SEO';
 
@@ -31,6 +38,8 @@ export default function ComoTrabajamos() {
 
    const ctaRef = useRef(null);
    const [ctaVisible, setCtaVisible] = useState(false);
+
+   const sectionsRef = useRef<(HTMLElement | null)[]>([]);
 
    // Grid interaction logic & Observers
    useEffect(() => {
@@ -117,14 +126,14 @@ export default function ComoTrabajamos() {
    ];
 
    return (
-      <div className="w-full bg-[#050505] min-h-screen text-white font-sans selection:bg-[#6C5CE7] selection:text-white">
+      <div className="w-full bg-[#FFFFFF] min-h-screen text-black font-sans selection:bg-[#6C5CE7] selection:text-white">
          <SEO
             title="Cómo Trabajamos"
             description="Primero entender, luego intervenir. Proceso de ingeniería: Análisis, Definición, Diseño e Implementación. Infraestructura clara, operativa y sostenible."
          />
 
-         {/* HERO SECTION */}
-         <section className="relative w-full h-screen flex flex-col justify-center overflow-hidden border-b border-white/10">
+         {/* HERO SECTION - UNCHANGED */}
+         <section className="relative w-full h-[100vh] flex flex-col justify-center overflow-hidden border-b border-black/10 bg-[#050505] text-white">
 
             {/* 1. Interactive Background Grid */}
             <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
@@ -224,8 +233,8 @@ export default function ComoTrabajamos() {
             </div>
          </section>
 
-         {/* SECTION 1: PRINCIPIOS OPERATIVOS */}
-         <section ref={principlesRef} className="relative w-full bg-[#050505] py-32 border-b border-white/10 z-20">
+         {/* SECTION 1: PRINCIPIOS OPERATIVOS - UNCHANGED */}
+         <section ref={principlesRef} className="relative w-full bg-[#050505] py-32 border-b border-white/10 z-20 text-white">
             <div className="max-w-[1600px] mx-auto px-6 md:px-12">
                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
 
@@ -243,7 +252,7 @@ export default function ComoTrabajamos() {
                               Principios operativos <br /> de trabajo.
                            </h2>
 
-                           <div className="p-6 border border-white/10 bg-white/5 backdrop-blur-sm rounded-sm mb-8">
+                           <div className="p-6 border border-white/10 bg-white/5 backdrop-blur-sm rounded-none mb-8">
                               <div className="flex items-start gap-4 mb-4">
                                  <Terminal size={20} className="text-[#6C5CE7] mt-1" />
                                  <p className="font-mono text-xs text-[#6C5CE7] leading-relaxed">
@@ -322,270 +331,394 @@ export default function ComoTrabajamos() {
             </div>
          </section>
 
-         {/* SECTION 2: ANTES DE EMPEZAR (Pre-Work / Alignment) */}
+         {/* SECTION 2: ANTES DE EMPEZAR - REDESIGNED */}
          <section ref={preworkRef} className="relative w-full bg-white text-black py-32 z-30">
-            <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-
-               {/* Header */}
-               <div className={`mb-24 transition-all duration-1000 ${preworkVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                  <div className="flex items-center gap-4 mb-8">
-                     <span className="font-space-grotesk text-[#6C5CE7] font-bold">04.</span>
-                     <div className="h-[1px] w-12 bg-black/20"></div>
-                     <span className="font-jakarta text-xs uppercase tracking-[0.2em] text-[#6C5CE7]">ALINEACIÓN</span>
-                  </div>
-
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-end">
-                     <h2 className="font-space-grotesk font-bold text-5xl md:text-7xl leading-[1.0] tracking-tight">
-                        Antes de <br /><span className="text-[#6C5CE7]">empezar.</span>
-                     </h2>
-                     <div className="pb-2">
-                        <p className="font-jakarta text-xl text-gray-600 leading-relaxed font-medium">
-                           Este trabajo requiere contexto, información y participación activa.
-                        </p>
-                     </div>
-                  </div>
-               </div>
-
-               {/* Main Content Grid */}
-               <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-
-                  {/* Left: Scan/Sync Metaphor */}
-                  <div className="lg:col-span-5 relative">
-                     <div className={`bg-[#F5F5F7] rounded-sm p-12 border border-gray-200 relative overflow-hidden transition-all duration-1000 delay-200 ${preworkVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
-
-                        {/* Radar Animation */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] opacity-10 pointer-events-none">
-                           <div className="w-full h-full border border-black/20 rounded-full animate-[spin_10s_linear_infinite]"></div>
-                           <div className="absolute top-[10%] left-[10%] w-[80%] h-[80%] border border-black/10 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
-                        </div>
-                        <div className="absolute inset-0 bg-[linear-gradient(transparent_1px,rgba(255,255,255,0.5)_1px)] bg-[size:100%_4px] opacity-50 pointer-events-none"></div>
-
-                        <div className="relative z-10">
-                           <Layout size={48} className="text-[#6C5CE7] mb-8" strokeWidth={1.5} />
-                           <h3 className="font-space-grotesk font-bold text-3xl mb-4">Sincronización de expectativas.</h3>
-                           <p className="font-jakarta text-gray-500 leading-relaxed mb-8">
-                              El proceso funciona cuando ambas partes están alineadas desde el inicio.
+            <div className="absolute left-0 top-0 bottom-0 w-[1px] bg-black/5 left-[50%] hidden lg:block"></div>
+            <div className="max-w-[1600px] mx-auto px-6 md:px-12 relative z-10">
+               <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+                  {/* Left: Sticky Context */}
+                  <div className="relative">
+                     <div className="sticky top-32">
+                        <div className={`transition-all duration-1000 ${preworkVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                           <div className="flex items-center gap-4 mb-8">
+                              <span className="font-space-grotesk text-[#6C5CE7] font-bold">04.</span>
+                              <div className="h-[1px] w-12 bg-black/20"></div>
+                              <span className="font-jakarta text-xs uppercase tracking-[0.2em] text-[#6C5CE7]">ALINEACIÓN</span>
+                           </div>
+                           <h2 className="font-space-grotesk font-bold text-5xl md:text-7xl leading-[1.0] mb-8">
+                              Antes de <br /><span className="text-[#6C5CE7]">empezar.</span>
+                           </h2>
+                           <p className="font-jakarta text-2xl font-light text-gray-600 mb-12 max-w-md">
+                              Este trabajo requiere contexto, información y participación activa.
                            </p>
-                           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full shadow-sm">
-                              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                              <span className="font-jakarta text-xs font-bold uppercase tracking-widest text-gray-400">Listo para alinear</span>
+                           <div className="hidden lg:block">
+                              <div className="p-8 border border-black/10 bg-gray-50 backdrop-blur-sm max-w-md">
+                                 <div className="flex items-center gap-4 mb-4">
+                                    <div className="w-3 h-3 bg-[#6C5CE7]"></div>
+                                    <span className="font-space-grotesk font-bold uppercase tracking-widest text-sm">Estado Requerido</span>
+                                 </div>
+                                 <p className="font-jakarta text-gray-500">"El proceso funciona cuando ambas partes están alineadas desde el inicio."</p>
+                              </div>
                            </div>
                         </div>
                      </div>
                   </div>
 
-                  {/* Right: Checklist */}
-                  <div className="lg:col-span-7">
-                     <div className="flex flex-col gap-0 border-l border-black/10">
+                  {/* Right: The Checklist */}
+                  <div className="relative pt-12 lg:pt-32">
+                     <div className="space-y-16">
                         {[
-                           { title: "Entendemos cómo opera hoy.", text: "Analizamos la realidad actual del negocio, no la ideal.", icon: Target },
-                           { title: "Identificamos quién ejecuta.", text: "Claridad total sobre quién toma decisiones y quién las implementa.", icon: Users },
-                           { title: "Alineamos alcance.", text: "Definimos expectativas, tiempos y entregables antes de escribir una línea de código.", icon: Scale }
+                           { title: "Entendemos cómo opera hoy.", desc: "Antes de intervenir, analizamos la realidad actual del negocio. Identificamos flujos, nudos y dependencias críticas.", icon: Target },
+                           { title: "Identificamos quién ejecuta.", desc: "Claridad total sobre la estructura de decisión. Quién define, quién aprueba y quién opera el sistema día a día.", icon: Users },
+                           { title: "Alineamos alcance.", desc: "Sin sorpresas. Definimos expectativas, tiempos de entrega y límites del proyecto antes de escribir una línea de código.", icon: Scale },
+                           { title: "No trabajamos sobre supuestos.", desc: "Validamos cada hipótesis con datos reales de la operación. La infraestructura se construye sobre hechos, no sobre deseos.", icon: Crosshair }
                         ].map((item, idx) => (
                            <div
                               key={idx}
-                              className={`group relative pl-12 py-12 border-b border-black/10 last:border-b-0 transition-all duration-1000 ${preworkVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}
-                              style={{ transitionDelay: `${400 + (idx * 150)}ms` }}
+                              className={`relative pl-8 border-l-2 border-black/10 transition-all duration-1000 group ${preworkVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}
+                              style={{ transitionDelay: `${200 + (idx * 150)}ms` }}
                            >
-                              {/* Active Indicator Line */}
-                              <div className="absolute left-[-1px] top-0 bottom-0 w-[3px] bg-[#6C5CE7] transform scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top"></div>
-
-                              {/* Icon Bubble */}
-                              <div className="absolute left-[-20px] top-12 w-10 h-10 bg-white border border-gray-200 rounded-full flex items-center justify-center text-gray-400 group-hover:text-[#6C5CE7] group-hover:border-[#6C5CE7] transition-all duration-300 z-10">
-                                 <item.icon size={18} />
-                              </div>
-
-                              <h3 className="font-space-grotesk font-bold text-2xl md:text-3xl mb-3 text-black group-hover:text-[#6C5CE7] transition-colors">
-                                 {item.title}
-                              </h3>
-                              <p className="font-jakarta text-lg text-gray-500 max-w-lg leading-relaxed group-hover:text-gray-700 transition-colors">
-                                 {item.text}
-                              </p>
+                              <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white border-2 border-black/20 group-hover:border-[#6C5CE7] group-hover:bg-[#6C5CE7] transition-all duration-300"></div>
+                              <h3 className="font-space-grotesk font-bold text-3xl mb-4 group-hover:text-[#6C5CE7] transition-colors">{item.title}</h3>
+                              <p className="font-jakarta text-lg text-gray-600 leading-relaxed max-w-lg">{item.desc}</p>
                            </div>
                         ))}
                      </div>
+                  </div>
+               </div>
+            </div>
+         </section>
 
-                     <div className={`mt-16 pl-12 transition-all duration-1000 delay-1000 ${preworkVisible ? 'opacity-100' : 'opacity-0'}`}>
-                        <p className="font-space-grotesk text-2xl md:text-3xl font-medium text-black">
-                           "No trabajamos sobre supuestos."
+         {/* SECTION 3: DIAGNÓSTICO (Analysis/Audit Mode) - REDESIGNED */}
+         <section ref={diagnosisRef} className="relative w-full bg-[#050505] text-white py-32 border-b border-white/5 z-30 overflow-hidden">
+            {/* Background Technical Grid */}
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px] opacity-30 pointer-events-none"></div>
+
+            <div className="max-w-[1600px] mx-auto px-6 md:px-12 relative z-10">
+               <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+
+                  <div className="lg:col-span-12 mb-12">
+                     <div className={`flex flex-col items-start gap-4 transition-all duration-1000 ${diagnosisVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                        <div className="flex items-center gap-4">
+                           <span className="font-space-grotesk text-[#6C5CE7] font-bold">05.</span>
+                           <div className="h-[1px] w-12 bg-white/20"></div>
+                           <span className="font-jakarta text-xs uppercase tracking-[0.2em] text-[#6C5CE7]">FASE I</span>
+                        </div>
+                        <TextReveal visible={diagnosisVisible}>
+                           <h2 className="font-space-grotesk font-bold text-6xl md:text-8xl leading-none tracking-tight">DIAGNÓSTICO</h2>
+                        </TextReveal>
+                        <div className="w-full h-[1px] bg-white/10 mt-8 mb-8"></div>
+                     </div>
+                  </div>
+
+                  {/* Left: Definition */}
+                  <div className={`lg:col-span-5 transition-all duration-1000 delay-200 ${diagnosisVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-[-20px]'}`}>
+                     <p className="font-space-grotesk text-3xl font-light leading-tight text-white mb-8">
+                        El <span className="text-[#6C5CE7] font-bold">diagnóstico</span> es el punto de partida innegociable. No es una auditoría comercial; es una radiografía estructural.
+                     </p>
+                     <div className="p-8 border border-white/10 bg-white/5">
+                        <h4 className="font-space-grotesk font-bold text-xl mb-4 text-[#6C5CE7] uppercase tracking-widest">Identificamos</h4>
+                        <ul className="space-y-4 font-jakarta text-gray-400">
+                           <li className="flex items-start gap-3">
+                              <span className="text-[#6C5CE7] mt-1">/</span>
+                              <span>El sistema operativo real del negocio.</span>
+                           </li>
+                           <li className="flex items-start gap-3">
+                              <span className="text-[#6C5CE7] mt-1">/</span>
+                              <span>Puntos de fricción crítica en el flujo del cliente.</span>
+                           </li>
+                           <li className="flex items-start gap-3">
+                              <span className="text-[#6C5CE7] mt-1">/</span>
+                              <span>Qué debe intervenirse ahora y qué puede esperar.</span>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+
+                  {/* Right: Radar/Analysis Visuals */}
+                  <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-4">
+                     <div className={`bg-[#0A0A0A] p-8 border border-white/10 hover:border-[#6C5CE7] transition-colors duration-500 group ${diagnosisVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: '400ms' }}>
+                        <FileSearch className="text-gray-500 group-hover:text-[#6C5CE7] mb-6 transition-colors" size={32} strokeWidth={1} />
+                        <h3 className="font-space-grotesk font-bold text-2xl mb-2 text-white">Análisis de Estructura</h3>
+                        <p className="font-jakarta text-sm text-gray-500">Evaluamos la jerarquía de datos y dependencias actuales.</p>
+                     </div>
+                     <div className={`bg-[#0A0A0A] p-8 border border-white/10 hover:border-[#6C5CE7] transition-colors duration-500 group ${diagnosisVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: '500ms' }}>
+                        <Crosshair className="text-gray-500 group-hover:text-[#6C5CE7] mb-6 transition-colors" size={32} strokeWidth={1} />
+                        <h3 className="font-space-grotesk font-bold text-2xl mb-2 text-white">Mapeo de Fricción</h3>
+                        <p className="font-jakarta text-sm text-gray-500">Localización exacta de dónde se pierde eficiencia o clientes.</p>
+                     </div>
+                     <div className={`bg-[#0A0A0A] p-8 border border-white/10 hover:border-[#6C5CE7] transition-colors duration-500 group md:col-span-2 ${diagnosisVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: '600ms' }}>
+                        <div className="flex justify-between items-start">
+                           <div>
+                              <Terminal className="text-gray-500 group-hover:text-[#6C5CE7] mb-6 transition-colors" size={32} strokeWidth={1} />
+                              <h3 className="font-space-grotesk font-bold text-2xl mb-2 text-white">Definición de Viabilidad</h3>
+                              <p className="font-jakarta text-sm text-gray-500">Es el espacio donde se define si tiene sentido construir un sistema y en qué nivel hacerlo.</p>
+                           </div>
+                           <div className="hidden md:block">
+                              <div className="w-24 h-24 border border-white/10 rounded-full flex items-center justify-center animate-spin-slow group-hover:border-[#6C5CE7]/30">
+                                 <div className="w-16 h-16 border border-dashed border-gray-600 rounded-full"></div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+               </div>
+            </div>
+         </section>
+
+         {/* SECTION 4: DISEÑO (Architectural/Blueprint Mode) - REDESIGNED */}
+         <section ref={designRef} className="relative w-full bg-white text-black py-32 z-30">
+            {/* Blueprint Grid Background */}
+            <div className="absolute inset-0 bg-[linear-gradient(#E5E5E5_1px,transparent_1px),linear-gradient(90deg,#E5E5E5_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+
+            <div className="max-w-[1600px] mx-auto px-6 md:px-12 relative z-10">
+               <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+
+                  {/* Column 1: Header */}
+                  <div className={`lg:col-span-4 transition-all duration-1000 ${designVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                     <div className="sticky top-32">
+                        <div className="flex items-center gap-4 mb-8">
+                           <span className="font-space-grotesk text-[#6C5CE7] font-bold">06.</span>
+                           <div className="h-[1px] w-12 bg-black/20"></div>
+                           <span className="font-jakarta text-xs uppercase tracking-[0.2em] text-[#6C5CE7]">FASE II</span>
+                        </div>
+                        <h2 className="font-space-grotesk font-bold text-6xl leading-[0.9] text-black mb-8">
+                           DISEÑO DEL <br />SISTEMA.
+                        </h2>
+                        <p className="font-jakarta text-xl text-gray-600 mb-8 border-l-2 border-[#6C5CE7] pl-6">
+                           Con el diagnóstico claro, diseñamos la arquitectura exacta que el negocio necesita.
+                        </p>
+                        <div className="flex gap-2">
+                           <div className="px-4 py-2 border border-black/10 bg-white shadow-sm font-mono text-xs text-gray-500 uppercase">Input: Diagnóstico</div>
+                           <div className="px-4 py-2 border border-black/10 bg-black text-white shadow-sm font-mono text-xs uppercase">Output: Planos</div>
+                        </div>
+                     </div>
+                  </div>
+
+                  {/* Column 2: The Blueprint Content */}
+                  <div className="lg:col-span-8">
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {/* Card A */}
+                        <div className={`bg-white p-10 border border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all duration-1000 delay-200 ${designVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+                           <Ruler size={40} className="text-black mb-6" strokeWidth={1} />
+                           <h3 className="font-space-grotesk font-bold text-2xl mb-4 text-[#6C5CE7]">Definición del Sistema</h3>
+                           <p className="font-jakarta text-gray-600 mb-6">Determinamos si el enfoque debe ser de Orden, de Operación o de Crecimiento según la etapa del negocio.</p>
+                           <div className="w-full h-[1px] bg-gray-100 mb-4"></div>
+                           <span className="font-mono text-xs text-gray-400 uppercase">Intervención por etapas</span>
+                        </div>
+
+                        {/* Card B */}
+                        <div className={`bg-white p-10 border border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all duration-1000 delay-400 ${designVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+                           <Layers size={40} className="text-black mb-6" strokeWidth={1} />
+                           <h3 className="font-space-grotesk font-bold text-2xl mb-4 text-[#6C5CE7]">Componentes Funcionales</h3>
+                           <p className="font-jakarta text-gray-600 mb-6">Selección precisa de herramientas y su función específica dentro del conjunto.</p>
+                           <div className="w-full h-[1px] bg-gray-100 mb-4"></div>
+                           <span className="font-mono text-xs text-gray-400 uppercase">Sin catálogo, a la medida</span>
+                        </div>
+
+                        {/* Large Statement */}
+                        <div className={`md:col-span-2 mt-12 p-12 bg-[#F8F9FA] border-l-4 border-black transition-all duration-1000 delay-600 ${designVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}>
+                           <h3 className="font-space-grotesk font-bold text-3xl md:text-4xl text-black leading-tight">
+                              "No diseñamos por catálogo ni por moda. El sistema se construye a la medida de la realidad operativa."
+                           </h3>
+                        </div>
+                     </div>
+                  </div>
+
+               </div>
+            </div>
+         </section>
+
+         {/* SECTION 5: IMPLEMENTACIÓN (Build/Terminal Mode) - REDESIGNED */}
+         <section ref={implementationRef} className="relative w-full bg-[#080808] text-white py-32 border-b border-white/5 z-30">
+            <div className="max-w-[1600px] mx-auto px-6 md:px-12">
+               <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 section-grid">
+                  {/* Left: Header */}
+                  <div>
+                     <div className={`mb-16 transition-all duration-1000 ${implementationVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                        <div className="flex items-center gap-4 mb-8">
+                           <span className="font-space-grotesk text-[#6C5CE7] font-bold">07.</span>
+                           <div className="h-[1px] w-12 bg-white/20"></div>
+                           <span className="font-jakarta text-xs uppercase tracking-[0.2em] text-[#6C5CE7]">FASE III</span>
+                        </div>
+                        <h2 className="font-space-grotesk font-bold text-6xl md:text-8xl leading-none text-white mb-8">
+                           IMPLE-<br /><span className="text-gray-600">MENTACIÓN.</span>
+                        </h2>
+                        <p className="font-jakarta text-xl text-gray-400 max-w-lg">
+                           Construimos el sistema y lo dejamos funcionando en la operación real del negocio.
                         </p>
                      </div>
                   </div>
 
-               </div>
-            </div>
-         </section>
-
-         {/* SECTION 3: FASE 1 - DIAGNÓSTICO (Analysis/Audit Theme) */}
-         <section ref={diagnosisRef} className="relative w-full bg-[#050505] text-white py-32 border-b border-white/10 z-30">
-            <div className="max-w-[1600px] mx-auto px-6 md:px-12">
-               <div className={`mb-16 transition-all duration-1000 ${diagnosisVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                  <div className="flex items-center gap-4 mb-8">
-                     <span className="font-space-grotesk text-[#6C5CE7] font-bold">05.</span>
-                     <div className="h-[1px] w-12 bg-white/20"></div>
-                     <span className="font-jakarta text-xs uppercase tracking-[0.2em] text-[#6C5CE7]">FASE I</span>
-                  </div>
-                  <h2 className="font-space-grotesk font-bold text-5xl md:text-7xl leading-tight">Diagnóstico <br /> e Inmersión.</h2>
-               </div>
-
-               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                  {[
-                     { title: "Auditoría de Herramientas", desc: "Inventario total de software, accesos y desconexiones.", icon: FileSearch },
-                     { title: "Mapeo de Flujos", desc: "Diagramación visual de cómo se mueve la información hoy.", icon: Crosshair },
-                     { title: "Entrevistas Operativas", desc: "Conversaciones con el equipo para identificar puntos de dolor reales.", icon: MessageSquare }
-                  ].map((item, i) => (
-                     <div key={i} className={`p-10 border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-500 group ${diagnosisVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: `${200 * i}ms` }}>
-                        <item.icon size={32} className="text-[#6C5CE7] mb-6" />
-                        <h3 className="font-space-grotesk font-bold text-2xl mb-4">{item.title}</h3>
-                        <p className="font-jakarta text-gray-400 leading-relaxed">{item.desc}</p>
+                  {/* Right: Terminal Steps */}
+                  <div className="flex flex-col gap-0 border border-white/10 bg-[#0C0C0C]">
+                     <div className="flex items-center gap-2 p-4 border-b border-white/10 bg-[#151515]">
+                        <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                        <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                        <div className="ml-4 font-mono text-xs text-gray-500">root@axocia-deploy:~</div>
                      </div>
-                  ))}
-               </div>
-            </div>
-         </section>
 
-         {/* SECTION 4: FASE 2 - DISEÑO (Blueprint Theme) */}
-         <section ref={designRef} className="relative w-full bg-white text-black py-32 border-b border-black/10 z-30">
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[size:20px_20px]"></div>
-            <div className="max-w-[1600px] mx-auto px-6 md:px-12 relative z-10">
-               <div className={`flex flex-col md:flex-row justify-between items-end mb-16 transition-all duration-1000 ${designVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                  <div>
-                     <div className="flex items-center gap-4 mb-8">
-                        <span className="font-space-grotesk text-[#6C5CE7] font-bold">06.</span>
-                        <div className="h-[1px] w-12 bg-black/20"></div>
-                        <span className="font-jakarta text-xs uppercase tracking-[0.2em] text-[#6C5CE7]">FASE II</span>
-                     </div>
-                     <h2 className="font-space-grotesk font-bold text-5xl md:text-7xl leading-tight">Arquitectura <br /> y Diseño.</h2>
-                  </div>
-                  <div className="pb-4">
-                     <p className="font-jakarta text-xl font-medium text-gray-600 max-w-md text-right">
-                        No construimos sin planos. Diseñamos la solución completa antes de ejecutar.
-                     </p>
-                  </div>
-               </div>
-
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                  <div className={`border-l-2 border-[#6C5CE7] pl-8 py-4 transition-all duration-1000 delay-200 ${designVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}>
-                     <Ruler size={40} className="text-black mb-6" strokeWidth={1.5} />
-                     <h3 className="font-space-grotesk font-bold text-3xl mb-4">Planos del Sistema</h3>
-                     <p className="font-jakarta text-lg text-gray-600 leading-relaxed">
-                        Entregamos diagramas técnicos que explican qué se va a construir, cómo se conecta y qué problemas resuelve específicamente.
-                     </p>
-                  </div>
-                  <div className={`border-l-2 border-gray-200 pl-8 py-4 transition-all duration-1000 delay-400 ${designVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}>
-                     <Compass size={40} className="text-black mb-6" strokeWidth={1.5} />
-                     <h3 className="font-space-grotesk font-bold text-3xl mb-4">Selección de Tecnología</h3>
-                     <p className="font-jakarta text-lg text-gray-600 leading-relaxed">
-                        Definimos el stack tecnológico exacto. No vendemos software por vender; elegimos lo que el sistema necesita.
-                     </p>
-                  </div>
-               </div>
-            </div>
-         </section>
-
-         {/* SECTION 5: FASE 3 - IMPLEMENTACIÓN (Build/Code Theme) */}
-         <section ref={implementationRef} className="relative w-full bg-[#080808] text-white py-32 border-b border-white/10 z-30">
-            <div className="max-w-[1600px] mx-auto px-6 md:px-12">
-               <div className={`mb-16 transition-all duration-1000 ${implementationVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                  <div className="flex items-center gap-4 mb-8">
-                     <span className="font-space-grotesk text-[#6C5CE7] font-bold">07.</span>
-                     <div className="h-[1px] w-12 bg-white/20"></div>
-                     <span className="font-jakarta text-xs uppercase tracking-[0.2em] text-[#6C5CE7]">FASE III</span>
-                  </div>
-                  <h2 className="font-space-grotesk font-bold text-5xl md:text-7xl leading-tight text-white">Construcción <br /> e Implementación.</h2>
-               </div>
-
-               <div className="relative border-l border-white/10 pl-8 md:pl-16 space-y-16">
-                  {[
-                     { t: "Configuración Base", d: "Setup de servidores, bases de datos y cuentas maestras.", i: Server },
-                     { t: "Desarrollo de Flujos", d: "Programación de automatizaciones y conexiones entre herramientas.", i: GitBranch },
-                     { t: "Integración de IA", d: "Implementación de agentes y lógica de procesamiento de datos.", i: HardDrive },
-                     { t: "Pruebas de Estrés", d: "Validación del sistema bajo carga real antes del lanzamiento.", i: Activity }
-                  ].map((step, idx) => (
-                     <div key={idx} className={`relative transition-all duration-1000 ${implementationVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`} style={{ transitionDelay: `${idx * 150}ms` }}>
-                        <div className="absolute -left-[41px] md:-left-[73px] top-0 w-4 h-4 bg-[#080808] border border-[#6C5CE7] rounded-full"></div>
-                        <div className="flex flex-col md:flex-row md:items-center gap-6">
-                           <div className="w-16 h-16 bg-white/5 border border-white/10 flex items-center justify-center rounded-sm">
-                              <step.i size={24} className="text-[#6C5CE7]" />
+                     <div className="p-8 space-y-8">
+                        {[
+                           { cmd: "install_components", label: "Despliegue de Componentes", desc: "Instalación de herramientas definidas en el diseño." },
+                           { cmd: "config_logic", label: "Lógica Operativa", desc: "Configuración de flujos entre personas y procesos." },
+                           { cmd: "init_system", label: "Base Operativa", desc: "Sistema listo para usarse desde el día uno." }
+                        ].map((item, i) => (
+                           <div key={i} className={`flex gap-6 transition-all duration-500 group ${implementationVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`} style={{ transitionDelay: `${200 + (i * 150)}ms` }}>
+                              <div className="font-mono text-[#6C5CE7] pt-1">{`>`}</div>
+                              <div>
+                                 <div className="font-mono text-sm text-[#6C5CE7] mb-1 opacity-70">{item.cmd}</div>
+                                 <h4 className="font-space-grotesk font-bold text-2xl text-white mb-2 group-hover:text-[#6C5CE7] transition-colors">{item.label}</h4>
+                                 <p className="font-jakarta text-gray-500">{item.desc}</p>
+                              </div>
                            </div>
-                           <div>
-                              <h3 className="font-space-grotesk font-bold text-2xl text-white mb-2">{step.t}</h3>
-                              <p className="font-jakarta text-gray-400 max-w-lg">{step.d}</p>
+                        ))}
+
+                        <div className={`mt-8 pt-8 border-t border-white/10 transition-all delay-1000 ${implementationVisible ? 'opacity-100' : 'opacity-0'}`}>
+                           <div className="flex items-center gap-2 text-green-500">
+                              <CheckCircle2 size={16} />
+                              <span className="font-mono text-xs uppercase tracking-widest">Integración Completada</span>
                            </div>
+                           <p className="font-jakarta text-sm text-gray-500 mt-2">
+                              "La implementación no se entrega como proyecto terminado. Se integra como parte activa del día a día."
+                           </p>
                         </div>
                      </div>
+                  </div>
+
+               </div>
+            </div>
+         </section>
+
+         {/* SECTION 6: ACOMPAÑAMIENTO - REDESIGNED */}
+         <section className="relative w-full bg-white text-black py-32 overflow-hidden">
+            <div className="max-w-[1600px] mx-auto px-6 md:px-12 relative z-10">
+               <div className="flex flex-col lg:flex-row justify-between items-end gap-16 mb-24">
+                  <div>
+                     <span className="font-jakarta text-xs uppercase tracking-[0.2em] text-[#6C5CE7] mb-4 block">POST-IMPLEMENTACIÓN</span>
+                     <h2 className="font-space-grotesk font-bold text-5xl md:text-7xl leading-tight">
+                        Acompañamiento <br />Continuo.
+                     </h2>
+                  </div>
+                  <div className="max-w-md">
+                     <p className="font-jakarta text-xl font-medium text-gray-600 border-l-2 border-black pl-6">
+                        "El objetivo no es soportar herramientas. Es cuidar la salud del sistema a lo largo del tiempo."
+                     </p>
+                  </div>
+               </div>
+
+               {/* Cycle Animation Items */}
+               <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-b border-black">
+                  {[
+                     { icon: Settings, title: "Ajustes", desc: "Calibración fina sobre el sistema en operación real." },
+                     { icon: ShieldCheck, title: "Correcciones", desc: "Solución inmediata cuando el uso revela fricciones." },
+                     { icon: Activity, title: "Optimización", desc: "Mejora progresiva conforme cambia la complejidad." }
+                  ].map((item, i) => (
+                     <div key={i} className="group border-r border-black last:border-r-0 p-12 hover:bg-[#F8F9FA] transition-colors duration-300">
+                        <item.icon size={48} className="mb-8 text-black group-hover:scale-110 transition-transform duration-300" strokeWidth={1} />
+                        <h3 className="font-space-grotesk font-bold text-3xl mb-4 group-hover:text-[#6C5CE7] transition-colors">{item.title}</h3>
+                        <p className="font-jakarta text-gray-600 text-lg">{item.desc}</p>
+                     </div>
                   ))}
                </div>
             </div>
          </section>
 
-         {/* SECTION 6: FASE 4 - RITMO (Continuity Theme) */}
-         <section ref={rhythmRef} className="relative w-full bg-white text-black py-32 z-30">
-            <div className="max-w-[1400px] mx-auto px-6 md:px-12 text-center">
+         {/* SECTION 7: RITMO - REDESIGNED */}
+         <section ref={rhythmRef} className="relative w-full bg-white text-black py-32 border-b border-gray-100">
+            <div className="max-w-[1200px] mx-auto px-6 md:px-12 text-center">
                <div className={`transition-all duration-1000 ${rhythmVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
-                  <div className="inline-flex items-center gap-4 mb-8 justify-center">
-                     <span className="font-space-grotesk text-[#6C5CE7] font-bold">08.</span>
-                     <div className="h-[1px] w-12 bg-black/20"></div>
-                     <span className="font-jakarta text-xs uppercase tracking-[0.2em] text-[#6C5CE7]">FASE IV</span>
-                  </div>
-                  <h2 className="font-space-grotesk font-bold text-5xl md:text-8xl leading-none mb-8">Ritmo y <br /> Continuidad.</h2>
-                  <p className="font-jakarta text-xl text-gray-600 max-w-3xl mx-auto mb-12">
-                     El sistema no se "termina", evoluciona. Establecemos rutinas de revisión, optimización y ajuste para asegurar que la infraestructura crezca con el negocio.
-                  </p>
-                  <div className="flex justify-center gap-8 text-black">
-                     <div className="flex flex-col items-center gap-2">
-                        <Calendar size={32} strokeWidth={1.5} />
-                        <span className="font-mono text-sm uppercase">Revisiones Semanales</span>
-                     </div>
-                     <div className="w-[1px] h-12 bg-gray-200"></div>
-                     <div className="flex flex-col items-center gap-2">
-                        <Activity size={32} strokeWidth={1.5} />
-                        <span className="font-mono text-sm uppercase">Optimización Constante</span>
+                  <h2 className="font-space-grotesk font-bold text-9xl md:text-[12rem] text-gray-100 leading-[0.8] select-none">RITMO</h2>
+                  <div className="relative -mt-12 md:-mt-24 z-10">
+                     <h3 className="font-space-grotesk font-bold text-4xl md:text-6xl text-black mb-12">Y Comunicación.</h3>
+
+                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+                        <div className="bg-white border border-gray-200 p-8 shadow-sm">
+                           <div className="text-[#6C5CE7] font-bold text-xl mb-4">01.</div>
+                           <h4 className="font-space-grotesk font-bold text-2xl mb-2">Reuniones Claras</h4>
+                           <p className="font-jakarta text-gray-500">Con objetivos concretos. Nada de "juntas" sin propósito.</p>
+                        </div>
+                        <div className="bg-white border border-gray-200 p-8 shadow-sm">
+                           <div className="text-[#6C5CE7] font-bold text-xl mb-4">02.</div>
+                           <h4 className="font-space-grotesk font-bold text-2xl mb-2">Canales Definidos</h4>
+                           <p className="font-jakarta text-gray-500">La comunicación fluye por vías oficiales, no por mensajes sueltos.</p>
+                        </div>
+                        <div className="bg-white border border-gray-200 p-8 shadow-sm">
+                           <div className="text-[#6C5CE7] font-bold text-xl mb-4">03.</div>
+                           <h4 className="font-space-grotesk font-bold text-2xl mb-2">Decisiones Visibles</h4>
+                           <p className="font-jakarta text-gray-500">Todo documentado. Cero urgencias artificiales.</p>
+                        </div>
                      </div>
                   </div>
                </div>
             </div>
          </section>
 
-         {/* SECTION 7: LÍMITES (Scope/Boundaries) */}
-         <section ref={limitsRef} className="relative w-full bg-[#1A1A1A] text-white py-24 px-6 border-t border-b border-white/5 z-30">
-            <div className="max-w-4xl mx-auto flex flex-col md:flex-row gap-12 items-center">
-               <div className={`flex-1 transition-all duration-1000 ${limitsVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}>
-                  <div className="flex items-center gap-4 mb-4 text-red-400">
-                     <Ban size={24} />
-                     <h3 className="font-space-grotesk font-bold text-2xl uppercase">Límites del Sistema</h3>
+         {/* SECTION 8: LÍMITES - REDESIGNED */}
+         <section ref={limitsRef} className="relative w-full bg-[#1A1A1A] text-white py-32 px-6 overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-red-500 via-transparent to-red-500 opacity-50"></div>
+            <div className="max-w-[1400px] mx-auto relative z-10">
+               <div className={`flex flex-col items-center text-center transition-all duration-1000 ${limitsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                  <Ban size={64} className="text-white mb-8 opacity-20" strokeWidth={1} />
+                  <h2 className="font-space-grotesk font-bold text-5xl md:text-7xl mb-12">Límites del Proceso.</h2>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-16 text-left max-w-4xl mx-auto">
+                     <div className="space-y-8">
+                        <h3 className="font-space-grotesk font-bold text-2xl text-gray-400 border-b border-gray-700 pb-4">Lo que NO hacemos (Límites)</h3>
+                        <ul className="space-y-4 font-jakarta text-lg">
+                           <li className="flex items-start gap-4">
+                              <span className="text-red-500 font-bold">×</span>
+                              <span className="text-gray-300">No evaluamos cambios por urgencia.</span>
+                           </li>
+                           <li className="flex items-start gap-4">
+                              <span className="text-red-500 font-bold">×</span>
+                              <span className="text-gray-300">No creamos excepciones que rompan la lógica.</span>
+                           </li>
+                           <li className="flex items-start gap-4">
+                              <span className="text-red-500 font-bold">×</span>
+                              <span className="text-gray-300">El alcance se define desde el diagnóstico.</span>
+                           </li>
+                        </ul>
+                     </div>
+
+                     <div className="space-y-8">
+                        <h3 className="font-space-grotesk font-bold text-2xl text-gray-400 border-b border-gray-700 pb-4">Por qué existen</h3>
+                        <p className="font-jakarta text-xl leading-relaxed text-white">
+                           "Estos límites no frenan el avance. Protegen la coherencia y la continuidad del sistema."
+                        </p>
+                        <div className="p-4 border border-white/20 bg-white/5 mt-4">
+                           <span className="font-mono text-xs uppercase tracking-widest text-green-400">ESTADO: PROTEGIDO</span>
+                        </div>
+                     </div>
                   </div>
-                  <p className="font-jakarta text-gray-400 leading-relaxed text-lg">
-                     No somos empleados de tiempo completo. No gestionamos personal interno. No hacemos "micro-management". Somos arquitectos de infraestructura, no gerentes operativos.
-                  </p>
-               </div>
-               <div className={`w-full h-[1px] md:w-[1px] md:h-32 bg-white/10`}></div>
-               <div className={`flex-1 transition-all duration-1000 delay-200 ${limitsVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}>
-                  <div className="flex items-center gap-4 mb-4 text-green-400">
-                     <ShieldCheck size={24} />
-                     <h3 className="font-space-grotesk font-bold text-2xl uppercase">Garantía de Orden</h3>
-                  </div>
-                  <p className="font-jakarta text-gray-400 leading-relaxed text-lg">
-                     Garantizamos que la infraestructura entregada funciona, está documentada y es propiedad 100% del cliente. Sin cajas negras.
-                  </p>
                </div>
             </div>
          </section>
 
-         {/* SECTION 8: CTA */}
-         <section ref={ctaRef} className="relative w-full bg-[#050505] text-white py-32 px-6 flex flex-col items-center justify-center z-30">
-            <div className={`text-center max-w-4xl transition-all duration-1000 ${ctaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
-               <h2 className="font-space-grotesk font-bold text-5xl md:text-7xl mb-12">
-                  ¿Listo para <span className="text-[#6C5CE7]">construir</span>?
-               </h2>
-               <a href="#/diagnostico" className="inline-flex items-center gap-4 px-12 py-6 bg-white text-black font-space-grotesk font-bold text-xl uppercase tracking-widest hover:bg-[#6C5CE7] hover:text-white transition-all duration-300 group">
-                  <span>Iniciar Diagnóstico</span>
-                  <ArrowRight size={24} className="group-hover:translate-x-2 transition-transform" />
+         {/* SECTION 9: CTA - REDESIGNED */}
+         <section ref={ctaRef} className="relative w-full bg-[#050505] text-white py-48 px-6 flex flex-col items-center justify-center">
+            <div className={`text-center max-w-5xl transition-all duration-1000 ${ctaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+               <div className="mb-12">
+                  <span className="font-space-grotesk font-bold text-[#6C5CE7] text-xl mb-4 block">PUENTE AL DIAGNÓSTICO</span>
+                  <h2 className="font-space-grotesk font-bold text-5xl md:text-8xl leading-none mb-8">
+                     ¿Tiene sentido <br /> construir?
+                  </h2>
+                  <p className="font-jakarta text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+                     Si sientes que este enfoque encaja, el siguiente paso es entender el estado real de tu operación.
+                  </p>
+               </div>
+
+               <a href="#/diagnostico" className="group relative inline-flex items-center justify-center gap-4 px-16 py-8 bg-white text-black font-space-grotesk font-bold text-2xl uppercase tracking-widest overflow-hidden hover:text-white transition-colors duration-500">
+                  <div className="absolute inset-0 bg-[#6C5CE7] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left z-0"></div>
+                  <span className="relative z-10">Solicitar Diagnóstico</span>
+                  <ArrowRight size={28} className="relative z-10 group-hover:translate-x-2 transition-transform duration-300" />
                </a>
             </div>
          </section>
 
-         {/* FOOTER */}
+         {/* FOOTER - UNCHANGED (Matches Home) */}
          <footer className="relative w-full bg-black text-white pt-24 pb-8 px-0 border-t border-white/10 z-30">
             <div className="w-full border-b border-white/10">
                <div className="max-w-[1400px] mx-auto w-full grid grid-cols-1 md:grid-cols-4">
