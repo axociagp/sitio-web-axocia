@@ -247,8 +247,8 @@ export default function ComoTrabajamos() {
                            <div className="flex items-start gap-4 mb-4">
                               <Terminal size={20} className="text-[#6C5CE7] mt-1" />
                               <p className="font-mono text-xs text-[#6C5CE7] leading-relaxed">
-                                 > VERIFICACIÓN: COMPLETADA<br/>
-                                 > CARGANDO PROTOCOLOS...
+                                                                    {'>'} VERIFICACIÓN: COMPLETADA<br/>
+                                    {'>'} CARGANDO PROTOCOLOS...
                               </p>
                            </div>
                            <p className="font-jakarta text-lg text-gray-400 leading-relaxed">
