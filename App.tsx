@@ -141,17 +141,17 @@ function Layout() {
 
   return (
     <>
-      {/* GLOBAL NAVIGATION BUTTON */}
-      <div className="fixed top-8 right-8 md:top-12 md:right-12 z-[100] mix-blend-difference text-white">
+      {/* GLOBAL NAVIGATION BUTTON - Fixed Z-Index and Colors */}
+      <div className="fixed top-8 right-8 md:top-12 md:right-12 z-[9999]">
         <button
           onClick={() => setIsMenuOpen(true)}
-          className={`group flex items-center gap-3 focus:outline-none transition-opacity duration-300 ${isMenuOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+          className={`group flex items-center gap-3 focus:outline-none transition-all duration-300 ${isMenuOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
           aria-label="Abrir Menú"
         >
-          <span className="hidden md:block font-jakarta text-[10px] tracking-[0.2em] uppercase font-bold group-hover:tracking-[0.3em] transition-all duration-300">
+          <span className="hidden md:block font-jakarta text-[10px] tracking-[0.2em] uppercase font-bold text-white mix-blend-difference group-hover:tracking-[0.3em] transition-all duration-300">
             Menu
           </span>
-          <div className="p-2 border border-white/20 rounded-none group-hover:bg-white group-hover:text-black transition-colors duration-300">
+          <div className="p-2 bg-black border border-white/20 hover:bg-white hover:text-black hover:border-transparent text-white transition-all duration-300 shadow-lg">
             <Menu size={18} strokeWidth={1.5} />
           </div>
         </button>

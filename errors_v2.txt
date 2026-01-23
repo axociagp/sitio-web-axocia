@@ -1,0 +1,1 @@
+components/AIWidget.tsx(3,35): error TS2307: Cannot find module '../hooks/useMultimodalLive' or its corresponding type declarations.

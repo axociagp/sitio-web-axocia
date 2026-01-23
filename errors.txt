@@ -1,0 +1,2 @@
+pages/ComoTrabajamos.tsx(250,34): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+pages/ComoTrabajamos.tsx(251,34): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?

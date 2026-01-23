@@ -132,8 +132,10 @@ export function useMultimodalLive({ apiKey, systemInstruction }: UseMultimodalLi
 
             processorRef.current = processor;
             setIsListening(true);
-        } catch (err) {
+        } catch (err: any) {
             console.error("Error accessing microphone:", err);
+            setLogs(p => [...p, `Error Micrófono: ${err.message || "Permiso denegado"}`]);
+            setConnected(false);
         }
     };
 

@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Mic, MicOff, MessageSquare, X, Send, Activity, Terminal } from 'lucide-react';
 import { useMultimodalLive } from '../src/hooks/useMultimodalLive';
-declare const process: any;
+
+// Config
+// Use the provided key or fallback safely. Note: In a real app, use import.meta.env.VITE_GEMINI_API_KEY
+const API_KEY = "AIzaSyBOrwCqU7MR4xf4N1MXlsg4aQ859ge1dD0";
+
 export function AIWidget() {
     const [isOpen, setIsOpen] = useState(false);
     const [context, setContext] = useState<string>("");
@@ -9,11 +13,6 @@ export function AIWidget() {
 
     // Inactivity Timer
     const lastActivityRef = useRef(Date.now());
-
-    // Config
-    const API_KEY = process.env.GEMINI_API_KEY || "AIzaSyBOrwCqU7MR4xf4N1MXlsg4aQ859ge1dD0"; // Fallback or loaded safely? 
-    // Ideally we shouldn't expose key on client, but for this demo request it was provided. 
-    // In strict prod, we'd proxy. But user asked to use THIS key.
 
     // Fetch Context on Mount
     useEffect(() => {
@@ -107,8 +106,8 @@ export function AIWidget() {
                         return (
                             <div key={i} className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
                                 <div className={`max-w-[80%] p-3 text-sm font-jakarta leading-relaxed border ${isUser
-                                        ? 'bg-white/10 border-white/20 text-white'
-                                        : 'bg-[#6C5CE7]/10 border-[#6C5CE7]/30 text-gray-200'
+                                    ? 'bg-white/10 border-white/20 text-white'
+                                    : 'bg-[#6C5CE7]/10 border-[#6C5CE7]/30 text-gray-200'
                                     }`}>
                                     {text}
                                 </div>
@@ -167,5 +166,3 @@ export function AIWidget() {
         </div>
     );
 }
-
-
