@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Lenis Smooth Scroll */
+html.lenis { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-scrolling iframe { pointer-events: none; }
+
+/* Global Styles */
+::selection {
+  background-color: #6C5CE7;
+  color: white;
+}
+
+body {
+  background-color: #FFFFFF;
+  color: #000000;
+  overflow-x: hidden;
+}
+
+/* Custom Utilities if needed */
+.perspective-1000 {
+  perspective: 1000px;
+}
