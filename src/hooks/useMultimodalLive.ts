@@ -2,7 +2,7 @@ import { useState, useRef, useCallback } from 'react';
 
 // Configuration
 const WS_URL = "wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent";
-const MODEL = "models/gemini-2.0-flash-exp"; 
+const MODEL = "models/gemini-2.0-flash";
 
 interface UseMultimodalLiveProps {
     apiKey: string;
@@ -23,7 +23,7 @@ export function useMultimodalLive({ apiKey, systemInstruction }: UseMultimodalLi
 
         ws.onopen = () => {
             setConnected(true);
-            setLogs(p => [...p, "Conectado a Gemini."]);
+            setLogs(p => [...p, "Hola, ¿tienes alguna duda?"]);
 
             // Send Setup Message
             const setupMsg = {

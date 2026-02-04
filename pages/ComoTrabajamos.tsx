@@ -170,7 +170,7 @@ export default function ComoTrabajamos() {
                   <div className="lg:col-span-8 relative">
                      <div className="relative z-20">
                         <TextReveal visible={mounted} delay="200ms">
-                           <h1 className="font-space-grotesk font-bold text-[13vw] lg:text-[9rem] xl:text-[11rem] leading-[0.8] tracking-tighter text-transparent stroke-white" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.5)' }}>
+                           <h1 className="font-space-grotesk font-bold text-[10vw] lg:text-[7rem] xl:text-[9rem] leading-[0.8] tracking-tighter text-transparent stroke-white" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.5)' }}>
                               CÓMO
                            </h1>
                         </TextReveal>
@@ -181,7 +181,7 @@ export default function ComoTrabajamos() {
                         <div className="lg:ml-24">
                            <TextReveal visible={mounted} delay="400ms">
                               {/* Adjusted sizing specifically for TRABAJAMOS to fit 8 cols */}
-                              <h1 className="font-space-grotesk font-bold text-[13vw] lg:text-[8rem] xl:text-[10rem] leading-[0.8] tracking-tighter text-white whitespace-nowrap">
+                              <h1 className="font-space-grotesk font-bold text-[10vw] lg:text-[6rem] xl:text-[8rem] leading-[0.8] tracking-tighter text-white whitespace-nowrap">
                                  TRABAJAMOS
                               </h1>
                            </TextReveal>

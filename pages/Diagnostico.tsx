@@ -293,12 +293,12 @@ export default function Diagnostico() {
                      </div>
 
                      <TextReveal visible={mounted} delay="200ms">
-                        <h1 className="font-space-grotesk font-bold text-[12vw] lg:text-[7rem] xl:text-[8rem] leading-[0.85] tracking-tighter mb-2 text-white">
+                        <h1 className="font-space-grotesk font-bold text-[10vw] lg:text-[6rem] xl:text-[7rem] leading-[0.85] tracking-tighter mb-2 text-white">
                            DIAGNÓSTICO
                         </h1>
                      </TextReveal>
                      <TextReveal visible={mounted} delay="400ms">
-                        <h1 className="font-space-grotesk font-bold text-[12vw] lg:text-[7rem] xl:text-[8rem] leading-[0.85] tracking-tighter text-transparent stroke-white" style={{ WebkitTextStroke: '1px #6C5CE7' }}>
+                        <h1 className="font-space-grotesk font-bold text-[10vw] lg:text-[6rem] xl:text-[7rem] leading-[0.85] tracking-tighter text-transparent stroke-white" style={{ WebkitTextStroke: '1px #6C5CE7' }}>
                            DE INFRAESTRUCTURA
                         </h1>
                      </TextReveal>
