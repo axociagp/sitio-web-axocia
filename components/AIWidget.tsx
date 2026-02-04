@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MessageSquare, X, Send, Activity, Terminal } from 'lucide-react';
-import { useMultimodalLive } from '../src/hooks/useMultimodalLive';
 
 // Config
 // Use the provided key or fallback safely. Note: In a real app, use import.meta.env.VITE_GEMINI_API_KEY
@@ -10,9 +9,9 @@ export function AIWidget() {
     const [isOpen, setIsOpen] = useState(false);
     const [context, setContext] = useState<string>("");
     const [inputValue, setInputValue] = useState("");
-
-    // Inactivity Timer
-    const lastActivityRef = useRef(Date.now());
+    const [logs, setLogs] = useState<string[]>(["AI: Hola, ¿tienes alguna duda?"]);
+    const [isLoading, setIsLoading] = useState(false);
+    const messagesEndRef = useRef<HTMLDivElement>(null);
 
     // Fetch Context on Mount
     useEffect(() => {
@@ -20,86 +19,91 @@ export function AIWidget() {
             .then(res => res.json())
             .then(data => setContext(data.context || ""))
             .catch(err => console.error(err));
+    }, []);
 
-        // Activity Monitor
-        const interval = setInterval(() => {
-            if (isOpen && Date.now() - lastActivityRef.current > 60000) {
-                // Auto close/disconnect
-                handleDisconnect(); // Close connection
-                setIsOpen(false);
-            }
-        }, 5000);
-        return () => clearInterval(interval);
-    }, [isOpen]);
+    // Auto-scroll to bottom
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [logs]);
 
-    const {
-        connect, disconnect,
-        connected, logs, sendText
-    } = useMultimodalLive({
-        apiKey: API_KEY,
-        systemInstruction: `Eres el Asistente de Infraestructura de Axocia. Tono: Profesional, directo, experto en sistemas.
-        
-        BASE DE CONOCIMIENTOS:
-        ${context}
-        
-        INSTRUCCIONES:
-        1. Responde preguntas basadas SOLO en la Base de Conocimientos.
-        2. Si no sabes, di que no forma parte de la infraestructura actual y ofrece alternativa.
-        3. Sé conciso. Estilo suizo.`
-    });
+    const handleSend = async () => {
+        if (!inputValue.trim() || isLoading) return;
 
-    const handleOpen = () => {
-        setIsOpen(true);
-        connect();
-        lastActivityRef.current = Date.now();
-    };
-
-    const handleDisconnect = () => {
-        disconnect();
-        setIsOpen(false);
-    };
-
-    const handleSend = () => {
-        if (!inputValue.trim()) return;
-        sendText(inputValue);
+        const userMsg = inputValue;
         setInputValue("");
-        lastActivityRef.current = Date.now();
+        setLogs(prev => [...prev, `User: ${userMsg}`]);
+        setIsLoading(true);
+
+        try {
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{
+                            text: `Eres el Asistente de Infraestructura de Axocia. Tono: Profesional, directo, experto en sistemas.
+                            
+                            BASE DE CONOCIMIENTOS:
+                            ${context}
+                            
+                            HISTORIAL:
+                            ${logs.slice(-5).map(l => l.replace('AI:', 'Modelo:').replace('User:', 'Usuario:')).join('\n')}
+                            
+                            USUARIO: ${userMsg}
+                            
+                            INSTRUCCIONES:
+                            1. Responde preguntas basadas SOLO en la Base de Conocimientos si es posible.
+                            2. Sé conciso. Estilo suizo.`
+                        }]
+                    }]
+                })
+            });
+
+            const data = await response.json();
+            const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || "Lo siento, no pude procesar tu solicitud.";
+
+            setLogs(prev => [...prev, `AI: ${aiResponse}`]);
+        } catch (error) {
+            console.error("Error calling Gemini API:", error);
+            setLogs(prev => [...prev, "AI: Error de conexión. Intenta de nuevo."]);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
-        <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end font-sans">
+        // Container: Fixed TOP-RIGHT, below the menu button (which is top-8 right-8)
+        // Menu is ~50px height. So top-24 should be safe.
+        <div className="fixed top-24 right-8 z-[8000] flex flex-col items-end font-sans">
 
             {/* WIDGET WINDOW */}
             <div className={`
-                mb-4 w-[350px] md:w-[400px] bg-[#0A0A0A] border border-white/20 shadow-2xl overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]
-                ${isOpen ? 'opacity-100 translate-y-0 h-[600px] pointer-events-auto' : 'opacity-0 translate-y-12 h-0 pointer-events-none'}
+                mb-4 w-[300px] h-[400px] bg-[#0A0A0A] border border-white/20 shadow-2xl overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]
+                flex flex-col origin-top-right
+                ${isOpen ? 'opacity-100 scale-100 pointer-events-auto' : 'opacity-0 scale-90 pointer-events-none absolute'}
             `}>
 
                 {/* Header */}
-                <div className="h-12 border-b border-white/10 flex justify-between items-center px-4 bg-white/5 backdrop-blur-md">
+                <div className="h-10 border-b border-white/10 flex justify-between items-center px-4 bg-white/5 backdrop-blur-md shrink-0">
                     <div className="flex items-center gap-2">
-                        <div className={`w-2 h-2 rounded-full ${connected ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`}></div>
-                        <span className="font-mono text-[10px] tracking-widest text-[#6C5CE7]">AXOCIA_AI_CORE</span>
+                        <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
+                        <span className="font-mono text-[9px] tracking-widest text-[#6C5CE7]">AXOCIA_AI</span>
                     </div>
-                    <button onClick={handleDisconnect} className="text-gray-500 hover:text-white transition-colors">
-                        <X size={16} />
+                    <button onClick={() => setIsOpen(false)} className="text-gray-500 hover:text-white transition-colors">
+                        <X size={14} />
                     </button>
                 </div>
 
                 {/* Chat Area */}
-                <div className="h-[480px] overflow-y-auto p-4 space-y-4 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-opacity-5">
-                    {logs.length === 0 && (
-                        <div className="flex flex-col items-center justify-center h-full text-gray-600 opacity-50">
-                            <Terminal size={32} className="mb-4 text-[#6C5CE7]" />
-                            <p className="font-mono text-xs text-center">SISTEMA LISTO.<br />ESPERANDO COMANDO...</p>
-                        </div>
-                    )}
+                <div className="flex-1 overflow-y-auto p-3 space-y-3 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-opacity-5">
                     {logs.map((log, i) => {
                         const isUser = log.startsWith("User:");
                         const text = log.replace(/^(User:|AI:)/, '').trim();
                         return (
                             <div key={i} className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
-                                <div className={`max-w-[80%] p-3 text-sm font-jakarta leading-relaxed border ${isUser
+                                <div className={`max-w-[85%] p-2.5 text-xs font-jakarta leading-relaxed border ${isUser
                                     ? 'bg-white/10 border-white/20 text-white'
                                     : 'bg-[#6C5CE7]/10 border-[#6C5CE7]/30 text-gray-200'
                                     }`}>
@@ -108,51 +112,44 @@ export function AIWidget() {
                             </div>
                         );
                     })}
+                    {isLoading && (
+                        <div className="flex justify-start">
+                            <div className="bg-[#6C5CE7]/10 border border-[#6C5CE7]/30 p-2 text-xs text-gray-400 animate-pulse">
+                                ...
+                            </div>
+                        </div>
+                    )}
+                    <div ref={messagesEndRef} />
                 </div>
 
                 {/* Input Area */}
-                <div className="absolute bottom-0 w-full h-16 bg-[#0A0A0A] border-t border-white/10 flex items-center px-4 gap-2">
-                    <div className="flex-1 relative">
-                        <input
-                            type="text"
-                            value={inputValue}
-                            onChange={(e) => setInputValue(e.target.value)}
-                            onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                            placeholder="Escribe un mensaje..."
-                            className="w-full bg-transparent border-none text-white font-mono text-sm focus:outline-none placeholder-gray-700"
-                        />
-                    </div>
-
-                    <button onClick={handleSend} className="p-2 text-[#6C5CE7] hover:text-white transition-colors">
-                        <Send size={18} />
+                <div className="h-12 bg-[#0A0A0A] border-t border-white/10 flex items-center px-3 gap-2 shrink-0">
+                    <input
+                        type="text"
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+                        placeholder="Escribe tu duda..."
+                        className="flex-1 bg-transparent border-none text-white font-mono text-xs focus:outline-none placeholder-gray-700"
+                        disabled={isLoading}
+                    />
+                    <button onClick={handleSend} disabled={isLoading} className="p-2 text-[#6C5CE7] hover:text-white transition-colors disabled:opacity-50">
+                        <Send size={16} />
                     </button>
                 </div>
             </div>
 
-            {/* FLOATING TRIGGER BUTTON */}
+            {/* FLOATING TRIGGER BUTTON (Visible when closed) */}
             <button
-                onClick={isOpen ? handleDisconnect : handleOpen}
+                onClick={() => setIsOpen(!isOpen)}
                 className={`
-                    group relative w-14 h-14 bg-white text-black flex items-center justify-center shadow-[0_0_30px_rgba(108,92,231,0.3)]
+                    w-12 h-12 bg-white text-black flex items-center justify-center shadow-[0_0_20px_rgba(108,92,231,0.2)]
                     hover:bg-[#6C5CE7] hover:text-white transition-all duration-300
-                    ${isOpen ? 'rotate-90 scale-0 opacity-0' : 'rotate-0 scale-100 opacity-100'}
+                    ${isOpen ? 'opacity-0 pointer-events-none hidden' : 'opacity-100'}
                 `}
             >
-                <Activity size={24} className="group-hover:scale-110 transition-transform" />
+                <MessageSquare size={20} />
             </button>
-
-            {/* Close Button (When Open - replaces Trigger) */}
-            <button
-                onClick={handleDisconnect}
-                className={`
-                    absolute bottom-0 right-0 w-14 h-14 bg-[#0A0A0A] border border-white/20 text-white flex items-center justify-center
-                    hover:border-red-500 hover:text-red-500 transition-all duration-300
-                    ${isOpen ? 'rotate-0 scale-100 opacity-100' : 'rotate-90 scale-0 opacity-0'}
-                `}
-            >
-                <X size={24} />
-            </button>
-
         </div>
     );
 }
