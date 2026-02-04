@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Mic, MicOff, MessageSquare, X, Send, Activity, Terminal } from 'lucide-react';
+import { MessageSquare, X, Send, Activity, Terminal } from 'lucide-react';
 import { useMultimodalLive } from '../src/hooks/useMultimodalLive';
 
 // Config
@@ -33,8 +33,8 @@ export function AIWidget() {
     }, [isOpen]);
 
     const {
-        connect, disconnect, startRecording, stopRecording,
-        connected, isListening, logs, sendText
+        connect, disconnect,
+        connected, logs, sendText
     } = useMultimodalLive({
         apiKey: API_KEY,
         systemInstruction: `Eres el Asistente de Infraestructura de Axocia. Tono: Profesional, directo, experto en sistemas.
@@ -66,12 +66,6 @@ export function AIWidget() {
         lastActivityRef.current = Date.now();
     };
 
-    const toggleMic = () => {
-        if (isListening) stopRecording();
-        else startRecording();
-        lastActivityRef.current = Date.now();
-    };
-
     return (
         <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end font-sans">
 
@@ -97,7 +91,7 @@ export function AIWidget() {
                     {logs.length === 0 && (
                         <div className="flex flex-col items-center justify-center h-full text-gray-600 opacity-50">
                             <Terminal size={32} className="mb-4 text-[#6C5CE7]" />
-                            <p className="font-mono text-xs text-center">SISTEMA LISTO.<br />ESCUCHANDO...</p>
+                            <p className="font-mono text-xs text-center">SISTEMA LISTO.<br />ESPERANDO COMANDO...</p>
                         </div>
                     )}
                     {logs.map((log, i) => {
@@ -124,14 +118,10 @@ export function AIWidget() {
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
                             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                            placeholder="Comando..."
+                            placeholder="Escribe un mensaje..."
                             className="w-full bg-transparent border-none text-white font-mono text-sm focus:outline-none placeholder-gray-700"
                         />
                     </div>
-
-                    <button onClick={toggleMic} className={`p-2 transition-colors ${isListening ? 'text-red-500 animate-pulse' : 'text-gray-400 hover:text-white'}`}>
-                        {isListening ? <MicOff size={18} /> : <Mic size={18} />}
-                    </button>
 
                     <button onClick={handleSend} className="p-2 text-[#6C5CE7] hover:text-white transition-colors">
                         <Send size={18} />

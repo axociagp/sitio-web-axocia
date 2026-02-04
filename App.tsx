@@ -6,7 +6,7 @@ import Diagnostico from './pages/Diagnostico';
 import Recursos from './pages/Recursos';
 import RecursoDetalle from './pages/RecursoDetalle';
 import { AIWidget } from './components/AIWidget';
-import Navbar from './components/Navbar';
+import { NavigationMenu } from './components/NavigationMenu'; // Updated Component
 import { Router, useLocation } from './components/Router';
 
 // Routes Logic
@@ -72,7 +72,7 @@ function Layout() {
 
   return (
     <>
-      <Navbar />
+      <NavigationMenu />
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
