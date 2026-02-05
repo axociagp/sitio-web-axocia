@@ -2,9 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { MessageSquare, X, Send, Activity, Terminal } from 'lucide-react';
 
 // Config
-// Use the provided key or fallback safely. Note: In a real app, use import.meta.env.VITE_GEMINI_API_KEY
-// Config
-const API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "AIzaSyBOrwCqU7MR4xf4N1MXlsg4aQ859ge1dD0";
+// Use the provided key from environment variables
+const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
 export function AIWidget() {
     const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +17,13 @@ export function AIWidget() {
     useEffect(() => {
         fetch('/api/knowledge')
             .then(res => res.json())
-            .then(data => setContext(data.context || ""))
+            .then(data => {
+                if (data.context) {
+                    setContext(data.context);
+                } else {
+                    console.warn("Context fetch returned no data.");
+                }
+            })
             .catch(err => console.log("Context fetch ignored:", err));
     }, []);
 
@@ -36,10 +41,11 @@ export function AIWidget() {
         setIsLoading(true);
 
         try {
-            if (!API_KEY || API_KEY.startsWith("YOUR_")) {
-                throw new Error("Clave API no configurada.");
+            if (!API_KEY) {
+                throw new Error("Clave API no configurada (VITE_GEMINI_API_KEY missing).");
             }
 
+            // Using gemini-1.5-flash as per previous config, but validating key usage
             const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -47,10 +53,10 @@ export function AIWidget() {
                     contents: [{
                         parts: [{
                             text: `Eres el Asistente de Infraestructura de Axocia. Tono: Profesional, directo, experto en sistemas.
-                            CONTEXTO: ${context}
-                            HISTORIAL RECIENTE: ${logs.slice(-5).join('\n')}
+                            CONTEXTO: ${context || "No context available."}
+                            HISTORIAL RECIENTE: ${logs.slice(-5).filter(l => !l.startsWith("AI: Error")).join('\n')}
                             USUARIO: ${userMsg}
-                            INSTRUCCIONES: Responde breve y profesionalmente.`
+                            INSTRUCCIONES: Responde breve y profesionalmente. Si no sabes la respuesta basándote en el contexto, indícalo claramente.`
                         }]
                     }]
                 })
@@ -58,17 +64,18 @@ export function AIWidget() {
 
             if (!response.ok) {
                 const errData = await response.json();
-                throw new Error(errData.error?.message || `HTTP ${response.status}`);
+                console.error("Gemini API Error Details:", errData);
+                throw new Error(errData.error?.message || `HTTP ${response.status} - ${response.statusText}`);
             }
 
             const data = await response.json();
             const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text;
 
-            if (!aiResponse) throw new Error('Sin respuesta del modelo.');
+            if (!aiResponse) throw new Error('El modelo no devolvió ninguna respuesta.');
 
             setLogs(prev => [...prev, `AI: ${aiResponse}`]);
         } catch (error) {
-            console.error("Gemini Error:", error);
+            console.error("Widget Error:", error);
             setLogs(prev => [...prev, `AI: Error: ${(error as Error).message}`]);
         } finally {
             setIsLoading(false);
@@ -90,7 +97,7 @@ export function AIWidget() {
                 {/* Header */}
                 <div className="h-10 border-b border-white/10 flex justify-between items-center px-4 bg-white/5 backdrop-blur-md shrink-0">
                     <div className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
+                        <div className={`w-1.5 h-1.5 rounded-full ${isLoading ? 'bg-yellow-500' : 'bg-green-500'} animate-pulse`}></div>
                         <span className="font-mono text-[9px] tracking-widest text-[#6C5CE7]">AXOCIA_AI</span>
                     </div>
                     <button onClick={() => setIsOpen(false)} className="text-gray-500 hover:text-white transition-colors">
@@ -102,12 +109,15 @@ export function AIWidget() {
                 <div className="flex-1 overflow-y-auto p-3 space-y-3 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-opacity-5">
                     {logs.map((log, i) => {
                         const isUser = log.startsWith("User:");
+                        const isError = log.startsWith("AI: Error:");
                         const text = log.replace(/^(User:|AI:)/, '').trim();
                         return (
                             <div key={i} className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
                                 <div className={`max-w-[85%] p-2.5 text-xs font-jakarta leading-relaxed border ${isUser
                                     ? 'bg-white/10 border-white/20 text-white'
-                                    : 'bg-[#6C5CE7]/10 border-[#6C5CE7]/30 text-gray-200'
+                                    : isError
+                                        ? 'bg-red-500/10 border-red-500/30 text-red-200'
+                                        : 'bg-[#6C5CE7]/10 border-[#6C5CE7]/30 text-gray-200'
                                     }`}>
                                     {text}
                                 </div>
