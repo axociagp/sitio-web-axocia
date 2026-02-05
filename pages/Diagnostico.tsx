@@ -362,7 +362,7 @@ export default function Diagnostico() {
 
             {/* ==================================================================================== */}
             {/* 1. DEFINICIÓN (Blueprint) - Sticky Header */}
-            {==================================================================================== */}
+            {/* ==================================================================================== */}
             <section ref={sec1Ref} className="sticky top-0 min-h-screen bg-[#F5F5F7] border-b border-black/10 flex items-center overflow-hidden z-0">
                {/* Blueprint Grid */}
                <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"></div>
@@ -423,7 +423,7 @@ export default function Diagnostico() {
 
             {/* ==================================================================================== */}
             {/* 2. LA TRAMPA DEL CRECIMIENTO (Formerly Entropía) - Sticky Layer Overlap */}
-            {==================================================================================== */}
+            {/* ==================================================================================== */}
             <section ref={sec2Ref} className="sticky top-0 min-h-screen bg-white border-b border-black/10 flex items-center z-10 overflow-hidden shadow-[0_-50px_100px_rgba(0,0,0,0.1)]">
                <div className="max-w-[1600px] mx-auto w-full px-6">
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 h-full items-center">
@@ -486,7 +486,7 @@ export default function Diagnostico() {
 
          {/* ==================================================================================== */}
          {/* 3. PATRONES (Dark Mode - Radar/Scanner) - Overlaps the White Sections */}
-         {==================================================================================== */}
+         {/* ==================================================================================== */}
          <section ref={sec3Ref} className="relative w-full bg-[#050505] text-white py-32 px-6 overflow-hidden z-20 shadow-[0_-50px_100px_rgba(0,0,0,0.5)]">
             {/* Radar Background */}
             <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
@@ -543,7 +543,7 @@ export default function Diagnostico() {
 
          {/* ==================================================================================== */}
          {/* 4. RIESGOS (Technical Logs / Kernel Panic Style) */}
-         {==================================================================================== */}
+         {/* ==================================================================================== */}
          <section ref={sec4Ref} className="relative w-full bg-[#F5F5F7] text-black py-32 px-6 z-30">
             <div className="max-w-[1400px] mx-auto text-center">
 
@@ -591,7 +591,7 @@ export default function Diagnostico() {
 
          {/* ==================================================================================== */}
          {/* 5. QUÉ EVALÚA (Technical Blueprint Grid) */}
-         {==================================================================================== */}
+         {/* ==================================================================================== */}
          <section ref={sec5Ref} className="relative w-full bg-[#050505] text-white py-32 px-6 overflow-hidden z-30">
             {/* Blueprint Grid */}
             <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
@@ -668,7 +668,7 @@ export default function Diagnostico() {
 
          {/* ==================================================================================== */}
          {/* 6. CUÁNDO TIENE SENTIDO (Split Logic Gate) */}
-         {==================================================================================== */}
+         {/* ==================================================================================== */}
          <section ref={sec6Ref} className="relative w-full bg-white text-black border-b border-black/10 z-30">
             <div className="grid grid-cols-1 lg:grid-cols-2">
 
@@ -728,7 +728,7 @@ export default function Diagnostico() {
 
          {/* ==================================================================================== */}
          {/* 7. PASO SIGUIENTE (Interactive Terminal Engine) */}
-         {==================================================================================== */}
+         {/* ==================================================================================== */}
          <section ref={sec7Ref} id="evaluation-engine" className="relative w-full bg-[#050505] py-32 px-6 border-t border-white/10 min-h-screen flex flex-col justify-center z-30">
 
             <div className="flex items-center justify-center gap-4 mb-12 opacity-50">

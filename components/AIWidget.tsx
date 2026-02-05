@@ -35,7 +35,8 @@ export function AIWidget() {
         setIsLoading(true);
 
         try {
-            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`, {
+            // Using gemini-1.5-flash (stable) instead of 2.0
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -62,12 +63,21 @@ export function AIWidget() {
             });
 
             const data = await response.json();
-            const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || "Lo siento, no pude procesar tu solicitud.";
+
+            if (data.error) {
+                throw new Error(data.error.message || 'API Error');
+            }
+
+            const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text;
+
+            if (!aiResponse) {
+                throw new Error('No response content');
+            }
 
             setLogs(prev => [...prev, `AI: ${aiResponse}`]);
         } catch (error) {
             console.error("Error calling Gemini API:", error);
-            setLogs(prev => [...prev, "AI: Error de conexión. Intenta de nuevo."]);
+            setLogs(prev => [...prev, `AI: Error del sistema: ${(error as Error).message}. Intenta de nuevo.`]);
         } finally {
             setIsLoading(false);
         }
