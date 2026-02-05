@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { TextReveal } from '../components/TextReveal';
 import { SEO } from '../components/SEO';
+import { Link } from '../src/lib/router';
 
 export default function ComoTrabajamos() {
    const [mounted, setMounted] = useState(false);
@@ -710,11 +711,11 @@ export default function ComoTrabajamos() {
                   </p>
                </div>
 
-               <a href="#/diagnostico" className="group relative inline-flex items-center justify-center gap-4 px-16 py-8 bg-white text-black font-space-grotesk font-bold text-2xl uppercase tracking-widest overflow-hidden hover:text-white transition-colors duration-500">
+               <Link to="/diagnostico" className="group relative inline-flex items-center justify-center gap-4 px-16 py-8 bg-white text-black font-space-grotesk font-bold text-2xl uppercase tracking-widest overflow-hidden hover:text-white transition-colors duration-500">
                   <div className="absolute inset-0 bg-[#6C5CE7] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left z-0"></div>
                   <span className="relative z-10">Solicitar Diagnóstico</span>
                   <ArrowRight size={28} className="relative z-10 group-hover:translate-x-2 transition-transform duration-300" />
-               </a>
+               </Link>
             </div>
          </section>
 
@@ -734,7 +735,7 @@ export default function ComoTrabajamos() {
                      <span className="font-mono text-xs text-gray-500">CONTACTO</span>
                      <div className="flex flex-col gap-2">
                         <div className="flex items-center gap-2"><Mail size={14} className="text-[#6C5CE7]" /><span className="font-mono text-sm group-hover:text-[#6C5CE7] transition-colors">contacto@axocia.com</span></div>
-                        <div className="flex items-center gap-2"><Phone size={14} className="text-[#6C5CE7]" /><span className="font-mono text-sm group-hover:text-[#6C5CE7] transition-colors">+502 4318 1439</span></div>
+                        <div className="flex items-center gap-2"><Phone size={14} className="text-[#6C5CE7]" /><a href="https://wa.me/message/ASOF25HZH5MGL1" target="_blank" rel="noopener noreferrer" className="font-mono text-sm group-hover:text-[#6C5CE7] transition-colors">+502 4318 1439</a></div>
                      </div>
                   </div>
                   <div className="p-8 flex flex-col gap-4 group hover:bg-white/5 transition-colors">

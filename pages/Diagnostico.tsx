@@ -139,8 +139,17 @@ export default function Diagnostico() {
       name: '', phone: '', email: '', company: '', industry: '',
       answers: {} as Record<string, string>
    });
+   const [questions, setQuestions] = useState<any[]>([]);
    const [processingLog, setProcessingLog] = useState<string[]>([]);
-   const [submissionError, setSubmissionError] = useState<string | null>(null);
+   const [error, setError] = useState<string | null>(null);
+
+   // Add useEffect to clear error on input change
+   useEffect(() => {
+      if (error) {
+         const timer = setTimeout(() => setError(null), 3000);
+         return () => clearTimeout(timer);
+      }
+   }, [formData, error]);
 
    useEffect(() => {
       const handleMouseMove = (e: MouseEvent) => {
@@ -177,6 +186,7 @@ export default function Diagnostico() {
    // Form Logic
    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setFormData({ ...formData, [e.target.name]: e.target.value });
+      setError(null); // Clear error on input change
    };
 
    const handleOptionSelect = (questionId: string, option: string) => {
@@ -225,7 +235,7 @@ export default function Diagnostico() {
          setProcessingLog(prev => [...prev, "Reporte generado exitosamente."]);
          setTimeout(() => setFormStep(5), 1000);
       } catch (e) {
-         setSubmissionError("Error al enviar el diagnóstico. Por favor intenta de nuevo.");
+         setError("Error al enviar el diagnóstico. Por favor intenta de nuevo.");
          setProcessingLog(prev => [...prev, "Error de conexión."]);
          // Allow retry after delay?
          setTimeout(() => setFormStep(4), 1000); // Re-show log or error state? Actually user logic ends here. 
@@ -238,16 +248,28 @@ export default function Diagnostico() {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       const phoneRegex = /^\+?[0-9]{8,15}$/; // Basic validation
 
-      if (!formData.name) return;
+      if (!formData.name) {
+         setError("El nombre es requerido.");
+         return;
+      }
       if (!emailRegex.test(formData.email)) {
-         alert("Por favor ingresa un email válido."); // We should use a better UI, but for now this blocks it.
+         setError("Por favor ingresa un email válido.");
          return;
       }
       if (!phoneRegex.test(formData.phone)) {
-         alert("Por favor ingresa un teléfono válido (8-15 dígitos).");
+         setError("Por favor ingresa un teléfono válido (8-15 dígitos).");
+         return;
+      }
+      if (!formData.company) {
+         setError("El nombre de la empresa es requerido.");
+         return;
+      }
+      if (!formData.industry) {
+         setError("El sector o industria es requerido.");
          return;
       }
 
+      setError(null); // Clear any previous errors
       setFormStep(1);
    };
 
@@ -340,7 +362,7 @@ export default function Diagnostico() {
 
             {/* ==================================================================================== */}
             {/* 1. DEFINICIÓN (Blueprint) - Sticky Header */}
-            {/* ==================================================================================== */}
+            {==================================================================================== */}
             <section ref={sec1Ref} className="sticky top-0 min-h-screen bg-[#F5F5F7] border-b border-black/10 flex items-center overflow-hidden z-0">
                {/* Blueprint Grid */}
                <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"></div>
@@ -401,7 +423,7 @@ export default function Diagnostico() {
 
             {/* ==================================================================================== */}
             {/* 2. LA TRAMPA DEL CRECIMIENTO (Formerly Entropía) - Sticky Layer Overlap */}
-            {/* ==================================================================================== */}
+            {==================================================================================== */}
             <section ref={sec2Ref} className="sticky top-0 min-h-screen bg-white border-b border-black/10 flex items-center z-10 overflow-hidden shadow-[0_-50px_100px_rgba(0,0,0,0.1)]">
                <div className="max-w-[1600px] mx-auto w-full px-6">
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 h-full items-center">
@@ -464,7 +486,7 @@ export default function Diagnostico() {
 
          {/* ==================================================================================== */}
          {/* 3. PATRONES (Dark Mode - Radar/Scanner) - Overlaps the White Sections */}
-         {/* ==================================================================================== */}
+         {==================================================================================== */}
          <section ref={sec3Ref} className="relative w-full bg-[#050505] text-white py-32 px-6 overflow-hidden z-20 shadow-[0_-50px_100px_rgba(0,0,0,0.5)]">
             {/* Radar Background */}
             <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
@@ -521,7 +543,7 @@ export default function Diagnostico() {
 
          {/* ==================================================================================== */}
          {/* 4. RIESGOS (Technical Logs / Kernel Panic Style) */}
-         {/* ==================================================================================== */}
+         {==================================================================================== */}
          <section ref={sec4Ref} className="relative w-full bg-[#F5F5F7] text-black py-32 px-6 z-30">
             <div className="max-w-[1400px] mx-auto text-center">
 
@@ -569,7 +591,7 @@ export default function Diagnostico() {
 
          {/* ==================================================================================== */}
          {/* 5. QUÉ EVALÚA (Technical Blueprint Grid) */}
-         {/* ==================================================================================== */}
+         {==================================================================================== */}
          <section ref={sec5Ref} className="relative w-full bg-[#050505] text-white py-32 px-6 overflow-hidden z-30">
             {/* Blueprint Grid */}
             <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
@@ -646,7 +668,7 @@ export default function Diagnostico() {
 
          {/* ==================================================================================== */}
          {/* 6. CUÁNDO TIENE SENTIDO (Split Logic Gate) */}
-         {/* ==================================================================================== */}
+         {==================================================================================== */}
          <section ref={sec6Ref} className="relative w-full bg-white text-black border-b border-black/10 z-30">
             <div className="grid grid-cols-1 lg:grid-cols-2">
 
@@ -706,7 +728,7 @@ export default function Diagnostico() {
 
          {/* ==================================================================================== */}
          {/* 7. PASO SIGUIENTE (Interactive Terminal Engine) */}
-         {/* ==================================================================================== */}
+         {==================================================================================== */}
          <section ref={sec7Ref} id="evaluation-engine" className="relative w-full bg-[#050505] py-32 px-6 border-t border-white/10 min-h-screen flex flex-col justify-center z-30">
 
             <div className="flex items-center justify-center gap-4 mb-12 opacity-50">
@@ -777,7 +799,7 @@ export default function Diagnostico() {
                                        name={field}
                                        value={formData[field as keyof typeof formData] as string}
                                        onChange={handleInputChange}
-                                       className="w-full bg-transparent border-b border-white/20 py-2 text-white font-space-grotesk text-xl focus:outline-none focus:border-[#6C5CE7] transition-colors placeholder-white/5"
+                                       className="w-full bg-transparent border-b border-white/20 py-2 text-white font-space-grotesk text-lg focus:outline-none focus:border-[#6C5CE7] transition-colors placeholder-white/5"
                                        placeholder="Input..."
                                     />
                                  </div>
@@ -814,7 +836,7 @@ export default function Diagnostico() {
                                     className="w-full text-left p-4 border border-white/10 hover:border-[#6C5CE7] hover:bg-[#6C5CE7]/10 transition-all duration-200 group flex items-center gap-4"
                                  >
                                     <span className="font-mono text-xs text-gray-500 group-hover:text-[#6C5CE7]">[{idx}]</span>
-                                    <span className="font-jakarta text-lg text-gray-300 group-hover:text-white">{option}</span>
+                                    <span className="font-jakarta text-base md:text-lg text-gray-300 group-hover:text-white">{option}</span>
                                  </button>
                               ))}
                            </div>

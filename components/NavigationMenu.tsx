@@ -11,9 +11,16 @@ export function NavigationMenu() {
         setIsOpen(false);
     }, [pathname]);
 
-    // Lock scroll
+    // Lock scroll & Handle ESC
     useEffect(() => {
         document.body.style.overflow = isOpen ? 'hidden' : 'unset';
+
+        const handleEsc = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') setIsOpen(false);
+        };
+
+        if (isOpen) window.addEventListener('keydown', handleEsc);
+        return () => window.removeEventListener('keydown', handleEsc);
     }, [isOpen]);
 
     const menuItems = [
@@ -51,7 +58,7 @@ export function NavigationMenu() {
 
             {/* DRAWER PANEL */}
             <div
-                className={`fixed top-0 right-0 z-[9002] h-[100dvh] w-full md:w-[600px] bg-white text-black shadow-2xl transform transition-transform duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] flex flex-col ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+                className={`fixed top-0 right-0 z-[9002] h-[100dvh] w-full md:w-[600px] bg-white text-black shadow-2xl transform transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] flex flex-col ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
             >
                 {/* Background Grid */}
                 <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"></div>
