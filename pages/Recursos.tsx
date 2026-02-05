@@ -3,38 +3,21 @@ import { ArrowRight, ArrowUpRight, BookOpen, Hash, Tag, Clock, Share2, Filter, G
 import { TextReveal } from '../components/TextReveal';
 import { SEO } from '../components/SEO';
 import { Link } from '../components/Router'; // Hook into custom router
+import { BLOG_POSTS } from '../src/data/blog';
 
 export default function Recursos() {
    const [mounted, setMounted] = useState(false);
    const [activeArticle, setActiveArticle] = useState(0);
    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
    const [scrollY, setScrollY] = useState(0);
-   const [articles, setArticles] = useState<any[]>([]);
-   const [loading, setLoading] = useState(true);
+   const [articles, setArticles] = useState<any[]>(BLOG_POSTS);
+   const [loading, setLoading] = useState(false);
 
    // Section Refs
    const heroRef = useRef(null);
 
    useEffect(() => {
       setMounted(true);
-
-      // Fetch articles from Notion API
-      fetch('/api/posts')
-         .then(res => res.json())
-         .then(data => {
-            const formatted = data.map((post: any, idx: number) => ({
-               ...post,
-               image: post.coverImage,
-               readTime: "5 MIN", // Estimate or default
-               code: `AX_SYS_${String(idx + 1).padStart(2, '0')}`, // Generate pseudo-code
-            }));
-            setArticles(formatted);
-            setLoading(false);
-         })
-         .catch(err => {
-            console.error(err);
-            setLoading(false);
-         });
 
       const handleScroll = () => {
          setScrollY(window.scrollY);
@@ -212,7 +195,7 @@ export default function Recursos() {
 
                                  {/* MOBILE IMAGE (Visible only on mobile) */}
                                  <div className="lg:hidden w-full aspect-video overflow-hidden border border-white/10 relative">
-                                    <img src={article.image} alt={article.title} className="w-full h-full object-cover" />
+                                    <img src={article.coverImage} alt={article.title} className="w-full h-full object-cover" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-[#050505] to-transparent opacity-60"></div>
                                  </div>
 
@@ -282,7 +265,7 @@ export default function Recursos() {
                                  {/* Glitch/Scanline Effect Container */}
                                  <div className="relative w-full h-full">
                                     <img
-                                       src={article.image}
+                                       src={article.coverImage}
                                        alt={article.title}
                                        className={`w-full h-full object-cover transition-transform duration-[2s] ease-out ${activeArticle === index ? 'scale-100 grayscale-0' : 'scale-110 grayscale'}`}
                                     />
