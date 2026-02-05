@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowLeft, Clock, Calendar } from 'lucide-react';
-import { Link } from '@/src/lib/router';
+import { Link } from '../src/lib/router';
 import { SEO } from '../components/SEO';
-import { BLOG_POSTS, ContentBlock } from '@/src/data/blog';
+import { BLOG_POSTS, ContentBlock } from '../src/data/blog';
 
 // Minimal block renderer
 const BlockRenderer = ({ block }: { block: ContentBlock }) => {

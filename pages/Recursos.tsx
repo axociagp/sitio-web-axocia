@@ -2,16 +2,24 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, ArrowUpRight, BookOpen, Hash, Tag, Clock, Share2, Filter, Grid, List, Search, Command, ChevronRight, CornerRightDown } from 'lucide-react';
 import { TextReveal } from '../components/TextReveal';
 import { SEO } from '../components/SEO';
-import { Link } from '@/src/lib/router'; // Hook into custom router
-import { BLOG_POSTS } from '@/src/data/blog';
+import { Link } from '../src/lib/router'; // Hook into custom router
+import { BLOG_POSTS } from '../src/data/blog';
 
 export default function Recursos() {
    const [mounted, setMounted] = useState(false);
    const [activeArticle, setActiveArticle] = useState(0);
    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
    const [scrollY, setScrollY] = useState(0);
-   const [articles, setArticles] = useState<any[]>(BLOG_POSTS);
+   const [articles, setArticles] = useState<any[]>([]);
    const [loading, setLoading] = useState(false);
+
+   useEffect(() => {
+      if (Array.isArray(BLOG_POSTS)) {
+         setArticles(BLOG_POSTS);
+      }
+   }, []);
+
+   const displayArticles = articles.length > 0 ? articles : (Array.isArray(BLOG_POSTS) ? BLOG_POSTS : []);
 
    // Section Refs
    const heroRef = useRef(null);
@@ -154,16 +162,16 @@ export default function Recursos() {
                            <span>FILTRAR: TODO</span>
                         </div>
                         <div className="flex items-center gap-6">
-                           <span className="text-xs font-mono text-gray-600 uppercase">[ {articles.length} ENTRADAS ]</span>
+                           <span className="text-xs font-mono text-gray-600 uppercase">[ {displayArticles.length} ENTRADAS ]</span>
                         </div>
                      </div>
 
                      {/* Article List */}
                      <div className="flex flex-col">
                         {loading && <div className="p-12 text-center text-gray-500 font-mono">CARGANDO RECURSOS...</div>}
-                        {articles.length === 0 && !loading && <div className="p-12 text-center text-gray-500 font-mono">NO HAY RECURSOS DISPONIBLES</div>}
+                        {displayArticles.length === 0 && !loading && <div className="p-12 text-center text-gray-500 font-mono">NO HAY RECURSOS DISPONIBLES</div>}
 
-                        {articles.map((article, index) => (
+                        {displayArticles.map((article, index) => (
                            <article
                               key={index}
                               className="group relative border-b border-white/10 p-8 md:p-16 transition-all duration-300 hover:bg-[#0A0A0A] cursor-pointer overflow-hidden"
@@ -257,7 +265,7 @@ export default function Recursos() {
                            </div>
 
                            {/* Images */}
-                           {articles.map((article, index) => (
+                           {displayArticles.map((article, index) => (
                               <div
                                  key={index}
                                  className={`absolute inset-0 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] transform ${activeArticle === index ? 'opacity-100' : 'opacity-0'}`}
@@ -280,17 +288,17 @@ export default function Recursos() {
                            ))}
 
                            {/* Floating Metadata (Sticky info inside the image) */}
-                           {articles.length > 0 && articles[activeArticle] && (
+                           {displayArticles.length > 0 && displayArticles[activeArticle] && (
                               <div className="absolute bottom-12 left-12 z-40">
                                  <div className="overflow-hidden">
                                     <h2 className="font-space-grotesk font-bold text-6xl text-white leading-none tracking-tighter mix-blend-difference">
-                                       {articles[activeArticle].category}
+                                       {displayArticles[activeArticle].category}
                                     </h2>
                                  </div>
                                  <div className="mt-6 flex items-center gap-6 text-xs font-mono text-white/80 uppercase tracking-widest mix-blend-difference">
                                     <div className="flex items-center gap-2">
                                        <Hash size={12} />
-                                       <span>ID: {articles[activeArticle].code}</span>
+                                       <span>ID: {displayArticles[activeArticle].code}</span>
                                     </div>
                                     <div className="w-8 h-[1px] bg-white/50"></div>
                                     <span>ESTADO: VERIFICADO</span>

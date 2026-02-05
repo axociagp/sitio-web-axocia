@@ -572,7 +572,7 @@ export default function Home() {
             <img src="https://storage.googleapis.com/msgsndr/fd2AxJxWWVbf4eQL4y5S/media/696d89224e42b9fb10c5e8a1.png" alt="AXOCIA Logo" className="w-[200px] md:w-[350px] object-contain select-none" />
           </div>
         </div>
-      </footer>
+      </section>
 
     </div>
   );

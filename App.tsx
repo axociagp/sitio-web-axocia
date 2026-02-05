@@ -1,7 +1,7 @@
 import React, { useEffect, Suspense } from 'react';
 import { AIWidget } from './components/AIWidget';
 import { NavigationMenu } from './components/NavigationMenu'; // Updated Component
-import { Router, useLocation } from '@/src/lib/router';
+import { Router, useLocation } from './src/lib/router';
 
 // Lazy Load Pages
 const Home = React.lazy(() => import('./pages/Home'));
