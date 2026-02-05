@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowLeft, Clock, Calendar } from 'lucide-react';
-import { Link } from '../components/Router';
+import { Link } from '@/src/lib/router';
 import { SEO } from '../components/SEO';
-import { BLOG_POSTS, ContentBlock } from '../src/data/blog';
+import { BLOG_POSTS, ContentBlock } from '@/src/data/blog';
 
 // Minimal block renderer
 const BlockRenderer = ({ block }: { block: ContentBlock }) => {
@@ -60,11 +60,11 @@ export default function RecursoDetalle() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const parts = window.location.pathname.split('/');
+        const parts = window.location.pathname.split('/').filter(Boolean);
         const cleanSlug = parts[parts.length - 1];
 
         if (cleanSlug) {
-            const foundPost = BLOG_POSTS.find(p => p.slug === cleanSlug);
+            const foundPost = BLOG_POSTS.find(p => p.slug.toLowerCase() === cleanSlug.toLowerCase());
             if (foundPost) {
                 setPost(foundPost);
             }

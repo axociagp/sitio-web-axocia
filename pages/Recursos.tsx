@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, ArrowUpRight, BookOpen, Hash, Tag, Clock, Share2, Filter, Grid, List, Search, Command, ChevronRight, CornerRightDown } from 'lucide-react';
 import { TextReveal } from '../components/TextReveal';
 import { SEO } from '../components/SEO';
-import { Link } from '../components/Router'; // Hook into custom router
-import { BLOG_POSTS } from '../src/data/blog';
+import { Link } from '@/src/lib/router'; // Hook into custom router
+import { BLOG_POSTS } from '@/src/data/blog';
 
 export default function Recursos() {
    const [mounted, setMounted] = useState(false);
