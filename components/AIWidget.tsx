@@ -3,7 +3,8 @@ import { MessageSquare, X, Send, Activity, Terminal } from 'lucide-react';
 
 // Config
 // Use the provided key or fallback safely. Note: In a real app, use import.meta.env.VITE_GEMINI_API_KEY
-const API_KEY = "AIzaSyBOrwCqU7MR4xf4N1MXlsg4aQ859ge1dD0";
+// Config
+const API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "AIzaSyBOrwCqU7MR4xf4N1MXlsg4aQ859ge1dD0";
 
 export function AIWidget() {
     const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +19,7 @@ export function AIWidget() {
         fetch('/api/knowledge')
             .then(res => res.json())
             .then(data => setContext(data.context || ""))
-            .catch(err => console.error(err));
+            .catch(err => console.log("Context fetch ignored:", err));
     }, []);
 
     // Auto-scroll to bottom
@@ -35,49 +36,40 @@ export function AIWidget() {
         setIsLoading(true);
 
         try {
-            // Using gemini-1.5-flash (stable) instead of 2.0
+            if (!API_KEY || API_KEY.startsWith("YOUR_")) {
+                throw new Error("Clave API no configurada.");
+            }
+
             const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     contents: [{
                         parts: [{
                             text: `Eres el Asistente de Infraestructura de Axocia. Tono: Profesional, directo, experto en sistemas.
-                            
-                            BASE DE CONOCIMIENTOS:
-                            ${context}
-                            
-                            HISTORIAL:
-                            ${logs.slice(-5).map(l => l.replace('AI:', 'Modelo:').replace('User:', 'Usuario:')).join('\n')}
-                            
+                            CONTEXTO: ${context}
+                            HISTORIAL RECIENTE: ${logs.slice(-5).join('\n')}
                             USUARIO: ${userMsg}
-                            
-                            INSTRUCCIONES:
-                            1. Responde preguntas basadas SOLO en la Base de Conocimientos si es posible.
-                            2. Sé conciso. Estilo suizo.`
+                            INSTRUCCIONES: Responde breve y profesionalmente.`
                         }]
                     }]
                 })
             });
 
-            const data = await response.json();
-
-            if (data.error) {
-                throw new Error(data.error.message || 'API Error');
+            if (!response.ok) {
+                const errData = await response.json();
+                throw new Error(errData.error?.message || `HTTP ${response.status}`);
             }
 
+            const data = await response.json();
             const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text;
 
-            if (!aiResponse) {
-                throw new Error('No response content');
-            }
+            if (!aiResponse) throw new Error('Sin respuesta del modelo.');
 
             setLogs(prev => [...prev, `AI: ${aiResponse}`]);
         } catch (error) {
-            console.error("Error calling Gemini API:", error);
-            setLogs(prev => [...prev, `AI: Error del sistema: ${(error as Error).message}. Intenta de nuevo.`]);
+            console.error("Gemini Error:", error);
+            setLogs(prev => [...prev, `AI: Error: ${(error as Error).message}`]);
         } finally {
             setIsLoading(false);
         }
