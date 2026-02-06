@@ -3,7 +3,7 @@ import {
   ArrowRight, CheckCircle2, MapPin, Mail, Phone, Linkedin, Instagram, Facebook, Monitor, Server, Shield, Zap, Database, Globe, Layers, Cpu,
   XCircle, Settings, BarChart3, Check, AlertCircle
 } from 'lucide-react';
-import { Link } from '../components/Router';
+import { Link } from '../src/lib/router';
 import { TextReveal } from '../components/TextReveal';
 import { SEO } from '../components/SEO';
 

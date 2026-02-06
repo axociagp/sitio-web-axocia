@@ -102,6 +102,7 @@ export default function RecursoDetalle() {
             <SEO
                 title={post.metaTitle || post.title}
                 description={post.metaDescription || post.excerpt}
+                faqs={post.faqs}
             />
 
             {/* Simple Header */}

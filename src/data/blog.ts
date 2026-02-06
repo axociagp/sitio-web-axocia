@@ -20,6 +20,7 @@ export interface BlogPost {
     metaTitle: string;
     metaDescription: string;
     content: ContentBlock[];
+    faqs?: { question: string, answer: string }[];
 }
 
 export const BLOG_POSTS: BlogPost[] = [
@@ -52,7 +53,7 @@ export const BLOG_POSTS: BlogPost[] = [
             { id: "b14", type: "paragraph", content: "El error más común es pensar que el problema se soluciona agregando una nueva herramienta. En la práctica, esto solo crea otra isla de información." },
             { id: "b15", type: "paragraph", content: "La única integración real termina siendo una persona saltando entre pantallas." },
             { id: "b16", type: "heading_3", content: "La falsa sensación de control que dan los CRM y plantillas" },
-            { id: "b17", type: "paragraph", content: "Un CRM mal implementado no organiza la información de clientes: la fragmenta con mejor interfaz." },
+            { id: "b17", type: "paragraph", content: "Un CRM mal implementado no organiza la información de clientes: la fragmenta con mejor interfaz. Una <a href='/implementacion-crm-guatemala'>implementación de CRM bien diseñada</a> parte de entender el flujo operativo antes de configurar la herramienta." },
             { id: "b18", type: "paragraph", content: "Lo mismo ocurre con plantillas copiadas sin entender el flujo real del negocio." },
             { id: "b19", type: "heading_2", content: "¿Qué significa realmente organizar la información de clientes?" },
             { id: "b20", type: "paragraph", content: "Organizar la información de clientes no es ordenar datos. Es diseñar un sistema." },
@@ -96,6 +97,107 @@ export const BLOG_POSTS: BlogPost[] = [
             { id: "b50", type: "paragraph", content: "El primer paso es reducir y conectar, no agregar." },
             { id: "b51", type: "heading_2", content: "Conclusión" },
             { id: "b52", type: "paragraph", content: "Organizar la información de clientes no es un problema tecnológico, es un problema de diseño. Las empresas que lo entienden dejan de perseguir herramientas y construyen infraestructura." }
+        ]
+    },
+    {
+        id: "2",
+        title: "Implementación de CRM en Guatemala: cuando el sistema funciona incluso sin las personas clave",
+        slug: "implementacion-crm-guatemala",
+        category: "SISTEMAS",
+        coverImage: "https://storage.googleapis.com/msgsndr/fd2AxJxWWVbf4eQL4y5S/media/69861cd203c9d50ef5d5a37f.png",
+        excerpt: "Implementamos CRM en Guatemala como infraestructura operativa, eliminando dependencia de personas clave y logrando adopción real del equipo.",
+        date: "2024-02-06",
+        readTime: "6 MIN",
+        code: "AX_CRM_GT",
+        metaTitle: "Implementación de CRM en Guatemala | Sistemas que sí se adoptan",
+        metaDescription: "Implementamos CRM en Guatemala como infraestructura operativa, eliminando dependencia de personas clave y logrando adopción real del equipo.",
+        faqs: [
+            {
+                question: "¿Cuánto tiempo toma implementar un CRM?",
+                answer: "Semanas, no días. Depende de la complejidad del negocio."
+            },
+            {
+                question: "¿Qué CRM es mejor?",
+                answer: "El que se adapta a la operación, no al revés."
+            },
+            {
+                question: "¿El CRM reemplaza procesos?",
+                answer: "No. Los ordena y los soporta."
+            },
+            {
+                question: "¿Qué pasa si mi equipo no lo adopta?",
+                answer: "Es un problema de implementación, no de personas."
+            }
+        ],
+        content: [
+            { id: "c1", type: "paragraph", content: "La implementación de un CRM en Guatemala suele empezar con una buena intención: ordenar clientes, mejorar seguimiento y profesionalizar la operación. Sin embargo, en la práctica, muchos CRM terminan abandonados, subutilizados o convertidos en una tarea administrativa que el equipo evita." },
+            { id: "c2", type: "paragraph", content: "El problema no es el software." },
+            { id: "c3", type: "paragraph", content: "El problema es cómo se implementa." },
+            { id: "c4", type: "paragraph", content: "Un CRM bien implementado no es una herramienta más. Es una infraestructura operativa que permite que la empresa funcione de forma consistente, incluso cuando las personas clave no están disponibles." },
+            { id: "c5", type: "heading_2", content: "Por qué la mayoría de las implementaciones de CRM fracasan en las empresas guatemaltecas" },
+            { id: "c6", type: "heading_3", content: "El CRM visto como una herramienta aislada" },
+            { id: "c7", type: "paragraph", content: "Uno de los errores más comunes es adoptar el CRM como si fuera una aplicación independiente: se compra la licencia, se configura lo básico y se le pide al equipo que \"lo use\"." },
+            { id: "c8", type: "paragraph", content: "Cuando el CRM no está conectado al flujo real de trabajo, se percibe como algo externo, opcional y prescindible. El resultado casi siempre es el mismo: baja adopción." },
+            { id: "c9", type: "heading_3", content: "Resistencia del equipo y reaprendizaje mal gestionado" },
+            { id: "c10", type: "paragraph", content: "Un CRM implica una nueva forma de trabajar. Muchas implementaciones no preparan al equipo para ese reaprendizaje." },
+            { id: "c11", type: "paragraph", content: "Desde la experiencia, el equipo no rechaza el CRM por flojera, sino porque lo ve como una barrera: más campos que llenar, más pasos, más control." },
+            { id: "c12", type: "heading_3", content: "Cuando el CRM se convierte en trabajo extra" },
+            { id: "c13", type: "paragraph", content: "Si el CRM no ahorra tiempo desde el inicio, se transforma en carga administrativa. Cuando eso ocurre, el abandono es cuestión de meses." },
+            { id: "c14", type: "heading_2", content: "El problema real que una implementación de CRM sí debe resolver" },
+            { id: "c15", type: "paragraph", content: "La mayoría de empresas cree que busca un CRM para \"organizar mejor a sus clientes\". El problema real es la dependencia operativa de personas específicas." },
+            { id: "c16", type: "heading_3", content: "Dependencia operativa invisible" },
+            { id: "c17", type: "paragraph", content: "En muchas organizaciones, el conocimiento crítico vive en la cabeza de una o dos personas: historial de clientes, acuerdos, problemas y contexto real." },
+            { id: "c18", type: "paragraph", content: "Cuando esa persona falta, la operación se degrada." },
+            { id: "c19", type: "heading_3", content: "El costo de que el conocimiento viva en personas" },
+            { id: "c20", type: "paragraph", content: "Consultar personas en lugar de sistemas hace que el negocio sea frágil, difícil de escalar y lento para delegar." },
+            { id: "c21", type: "heading_2", content: "CRM como herramienta vs CRM como infraestructura operativa" },
+            { id: "c22", type: "heading_3", content: "Señales claras de un CRM mal implementado" },
+            { id: "c23", type: "bulleted_list_item", content: "Uso intermitente" },
+            { id: "c24", type: "bulleted_list_item", content: "Datos incompletos" },
+            { id: "c25", type: "bulleted_list_item", content: "Sistemas paralelos" },
+            { id: "c26", type: "bulleted_list_item", content: "Dependencia de personas clave" },
+            { id: "c27", type: "heading_3", content: "Qué cambia cuando el CRM es memoria del sistema" },
+            { id: "c28", type: "paragraph", content: "El CRM se convierte en una memoria operativa persistente accesible para todo el equipo." },
+            { id: "c29", type: "heading_3", content: "Por qué la adopción deja de ser opcional" },
+            { id: "c30", type: "paragraph", content: "Cuando el CRM es el único camino eficiente, nadie quiere operar fuera de él." },
+            { id: "c31", type: "heading_2", content: "Cómo implementamos un CRM para que el equipo sí lo use" },
+            { id: "c32", type: "heading_3", content: "Diseño del flujo antes de tocar la herramienta" },
+            { id: "c33", type: "paragraph", content: "Primero se mapea cómo fluye la información en la operación real. Esto implica definir <a href='/como-organizar-informacion-de-clientes'>cómo organizar la información de clientes</a> desde la arquitectura, antes de configurar campos o pantallas en el CRM." },
+            { id: "c34", type: "heading_3", content: "Automatización de captura de información" },
+            { id: "c35", type: "paragraph", content: "La información entra al sistema sin depender de la memoria humana." },
+            { id: "c36", type: "heading_3", content: "Capacitación enfocada en ahorro de trabajo" },
+            { id: "c37", type: "paragraph", content: "El CRM se presenta como una forma de reducir fricción, no de aumentar control." },
+            { id: "c38", type: "heading_3", content: "El CRM como único camino operativo" },
+            { id: "c39", type: "paragraph", content: "Operar fuera del sistema deja de tener sentido práctico." },
+            { id: "c40", type: "heading_2", content: "Qué incluye una implementación de CRM bien hecha" },
+            { id: "c41", type: "bulleted_list_item", content: "Diagnóstico de dependencias operativas" },
+            { id: "c42", type: "bulleted_list_item", content: "Diseño de arquitectura de información" },
+            { id: "c43", type: "bulleted_list_item", content: "Configuración del CRM según procesos reales" },
+            { id: "c44", type: "bulleted_list_item", content: "Capacitación y acompañamiento" },
+            { id: "c45", type: "heading_2", content: "Resultados reales de una implementación de CRM correcta" },
+            { id: "c46", type: "bulleted_list_item", content: "Continuidad operativa sin personas clave" },
+            { id: "c47", type: "bulleted_list_item", content: "Menos errores y retrabajo" },
+            { id: "c48", type: "bulleted_list_item", content: "Mejor seguimiento y control" },
+            { id: "c49", type: "heading_2", content: "¿Para qué tipo de empresas funciona esta implementación de CRM en Guatemala?" },
+            { id: "c50", type: "bulleted_list_item", content: "Empresas con equipos comerciales u operativos" },
+            { id: "c51", type: "bulleted_list_item", content: "Negocios dependientes de personas clave" },
+            { id: "c52", type: "bulleted_list_item", content: "Empresas en crecimiento que necesitan orden" },
+            { id: "c53", type: "heading_2", content: "Antes de implementar un CRM, hazte estas preguntas" },
+            { id: "c54", type: "bulleted_list_item", content: "¿Quién tiene la información crítica hoy?" },
+            { id: "c55", type: "bulleted_list_item", content: "¿Qué pasa si esa persona no está?" },
+            { id: "c56", type: "bulleted_list_item", content: "¿Dónde vive la memoria del negocio?" },
+            { id: "c57", type: "heading_2", content: "Preguntas frecuentes sobre implementación de CRM en Guatemala" },
+            { id: "c58", type: "heading_3", content: "¿Cuánto tiempo toma implementar un CRM?" },
+            { id: "c59", type: "paragraph", content: "Semanas, no días. Depende de la complejidad del negocio." },
+            { id: "c60", type: "heading_3", content: "¿Qué CRM es mejor?" },
+            { id: "c61", type: "paragraph", content: "El que se adapta a la operación, no al revés." },
+            { id: "c62", type: "heading_3", content: "¿El CRM reemplaza procesos?" },
+            { id: "c63", type: "paragraph", content: "No. Los ordena y los soporta." },
+            { id: "c64", type: "heading_3", content: "¿Qué pasa si mi equipo no lo adopta?" },
+            { id: "c65", type: "paragraph", content: "Es un problema de implementación, no de personas." },
+            { id: "c66", type: "heading_2", content: "Implementar un CRM no es instalar software" },
+            { id: "c67", type: "paragraph", content: "Es construir una infraestructura de memoria operativa que permite que la empresa funcione sin depender de individuos específicos." },
+            { id: "c68", type: "heading_2", content: "Hablemos de tu operación antes de hablar de herramientas" }
         ]
     }
 ];

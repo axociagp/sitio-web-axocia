@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html lang="es" class="antialiased">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#000000" />
-    
-    <!-- Primary Meta Tags injected via React Helmet (SEO.tsx) -->
-    <title>AXOCIA | Ingeniería de Resultados</title>
-    <link rel="icon" href="https://storage.googleapis.com/msgsndr/fd2AxJxWWVbf4eQL4y5S/media/696d89224e42b9fb10c5e8a1.png" />
-    
-    <!-- Fonts: Space Grotesk & Plus Jakarta Sans -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- React Import Map (Production Optimized) -->
-    <script type="importmap">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#000000" />
+
+  <!-- Primary Meta Tags injected via React Helmet (SEO.tsx) -->
+  <title>AXOCIA | Ingeniería de Resultados</title>
+  <link rel="icon"
+    href="https://storage.googleapis.com/msgsndr/fd2AxJxWWVbf4eQL4y5S/media/696d89224e42b9fb10c5e8a1.png" />
+
+  <!-- Fonts: Space Grotesk & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- React Import Map (Production Optimized) -->
+  <script type="importmap">
 {
   "imports": {
     "react": "https://esm.sh/react@18.3.1",
@@ -31,8 +35,78 @@
 </script>
   <link rel="stylesheet" href="/index.css">
 </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
-  </body>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+
+  <!-- GoHighLevel Chat Widget -->
+  <script src="https://beta.leadconnectorhq.com/loader.js"
+    data-resources-url="https://beta.leadconnectorhq.com/chat-widget/loader.js"
+    data-widget-id="69862a1d57721909d5cd26c0">
+    </script>
+
+  <!-- Custom Styling for GHL Chat Widget -->
+  <style>
+    /* Style the chat launcher button */
+    .lc_text-widget-button,
+    [class*="chat-widget-button"],
+    [class*="lc-chat-widget"] button {
+      background: linear-gradient(135deg, #6C5CE7 0%, #5849BE 100%) !important;
+      box-shadow: 0 4px 20px rgba(108, 92, 231, 0.4) !important;
+      border: none !important;
+      transition: all 0.3s ease !important;
+    }
+
+    .lc_text-widget-button:hover,
+    [class*="chat-widget-button"]:hover {
+      transform: scale(1.05) !important;
+      box-shadow: 0 6px 30px rgba(108, 92, 231, 0.6) !important;
+    }
+
+    /* Style the chat container */
+    .lc_text-widget,
+    [class*="lc-chat-widget-container"],
+    [class*="chat-widget-container"] {
+      font-family: 'Plus Jakarta Sans', sans-serif !important;
+      border-radius: 16px !important;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
+      border: 1px solid rgba(108, 92, 231, 0.3) !important;
+    }
+
+    /* Style the header */
+    .lc_text-widget-header,
+    [class*="chat-widget-header"] {
+      background: linear-gradient(135deg, #6C5CE7 0%, #5849BE 100%) !important;
+      font-family: 'Space Grotesk', sans-serif !important;
+    }
+
+    /* Style send button */
+    .lc_text-widget-send-button,
+    [class*="send-button"] {
+      background: #6C5CE7 !important;
+      border-radius: 8px !important;
+    }
+
+    .lc_text-widget-send-button:hover,
+    [class*="send-button"]:hover {
+      background: #5849BE !important;
+    }
+
+    /* Style message bubbles */
+    .lc_text-widget-message--bot,
+    [class*="bot-message"] {
+      background: rgba(108, 92, 231, 0.1) !important;
+      border: 1px solid rgba(108, 92, 231, 0.2) !important;
+      border-radius: 12px !important;
+    }
+
+    .lc_text-widget-message--user,
+    [class*="user-message"] {
+      background: #6C5CE7 !important;
+      border-radius: 12px !important;
+    }
+  </style>
+</body>
+
 </html>

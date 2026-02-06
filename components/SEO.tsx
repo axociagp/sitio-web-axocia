@@ -6,9 +6,10 @@ interface SEOProps {
   description: string;
   canonical?: string;
   keywords?: string[];
+  faqs?: { question: string, answer: string }[];
 }
 
-export const SEO: React.FC<SEOProps> = ({ title, description, canonical, keywords = [] }) => {
+export const SEO: React.FC<SEOProps> = ({ title, description, canonical, keywords = [], faqs = [] }) => {
   const siteName = "AXOCIA | Ingeniería de Resultados";
   const fullTitle = title === "Inicio" ? siteName : `${title} | AXOCIA`;
   const baseUrl = "https://axocia.com"; // Replace with production URL
@@ -117,27 +118,30 @@ export const SEO: React.FC<SEOProps> = ({ title, description, canonical, keyword
     }
   };
 
+  const defaultFaqs = [
+    {
+      question: "¿Qué es la Infraestructura Digital?",
+      answer: "Es el conjunto de activos digitales (CRM, automatizaciones, bases de datos) que permiten a un negocio operar, vender y entregar sin depender del esfuerzo manual constante."
+    },
+    {
+      question: "¿Implementan CRMs como HubSpot o Salesforce?",
+      answer: "Sí, pero no como técnicos, sino como ingenieros de proceso. La herramienta es secundaria al diseño del flujo de datos."
+    }
+  ];
+
+  const faqItems = faqs.length > 0 ? faqs : defaultFaqs;
+
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "¿Qué es la Infraestructura Digital?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Es el conjunto de activos digitales (CRM, automatizaciones, bases de datos) que permiten a un negocio operar, vender y entregar sin depender del esfuerzo manual constante."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "¿Implementan CRMs como HubSpot o Salesforce?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Sí, pero no como técnicos, sino como ingenieros de proceso. La herramienta es secundaria al diseño del flujo de datos."
-        }
+    "mainEntity": faqItems.map(item => ({
+      "@type": "Question",
+      "name": item.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": item.answer
       }
-    ]
+    }))
   };
 
   return (

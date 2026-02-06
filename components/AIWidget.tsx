@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { MessageSquare, X, Send, Activity, Terminal } from 'lucide-react';
 
 // Config
-// Use the provided key from environment variables
-const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+// Use the provided key from environment variables (Vite standard or custom define)
+// @ts-ignore - process.env might not be in types but is injected by vite.config.ts
+const API_KEY = import.meta.env.VITE_GEMINI_API_KEY || (typeof process !== 'undefined' ? process.env.GEMINI_API_KEY : null);
 
 export function AIWidget() {
     const [isOpen, setIsOpen] = useState(false);

@@ -1,6 +1,5 @@
 import React, { useEffect, Suspense } from 'react';
-import { AIWidget } from './components/AIWidget';
-import { NavigationMenu } from './components/NavigationMenu'; // Updated Component
+import { NavigationMenu } from './components/NavigationMenu';
 import { Router, useLocation } from './src/lib/router';
 
 // Lazy Load Pages
@@ -94,7 +93,7 @@ function Layout() {
           </Routes>
         </Suspense>
       </main>
-      <AIWidget />
+      {/* Chat widget is now loaded via GoHighLevel script in index.html */}
     </>
   );
 }
