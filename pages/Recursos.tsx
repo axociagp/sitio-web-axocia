@@ -239,63 +239,84 @@ export default function Recursos() {
 
                   </div>
 
-                  {/* RIGHT: THE VIEWPORT (Scrollable Gallery - Desktop Only) */}
-                  <div className="hidden lg:block lg:col-span-6 relative h-screen sticky top-0 bg-[#030303] overflow-y-auto border-l border-white/5">
+                  {/* RIGHT: THE VIEWPORT (Dynamic Viewport - Desktop Only) */}
+                  <div className="hidden lg:block lg:col-span-6 relative h-screen sticky top-0 bg-[#030303] overflow-hidden border-l border-white/5">
 
-                     {/* Images Gallery - Stacked Vertically */}
-                     <div className="flex flex-col gap-6 p-8">
+                     {/* Background Ticker / HUD Element */}
+                     <div className="absolute top-12 left-12 z-20 font-mono text-[10px] text-gray-700 tracking-[0.3em] flex items-center gap-4">
+                        <div className="w-12 h-[1px] bg-gray-800"></div>
+                        <span>SISTEMA_DE_VISUALIZACIÓN_ACTIVO</span>
+                        <div className="flex gap-1">
+                           <div className="w-1 h-1 bg-[#6C5CE7] animate-pulse"></div>
+                           <div className="w-1 h-1 bg-[#6C5CE7]/50 animate-pulse delay-75"></div>
+                           <div className="w-1 h-1 bg-[#6C5CE7]/20 animate-pulse delay-150"></div>
+                        </div>
+                     </div>
+
+                     <div className="absolute inset-0 flex items-center justify-center p-12 md:p-24">
                         {displayArticles.map((article, index) => (
                            <div
                               key={index}
-                              className={`relative w-full overflow-hidden border border-white/10 bg-[#0A0A0A] shadow-2xl transition-all duration-300 ${activeArticle === index ? 'ring-2 ring-[#6C5CE7]' : 'opacity-70 hover:opacity-100'}`}
-                              onClick={() => setActiveArticle(index)}
+                              className={`absolute inset-0 flex items-center justify-center p-12 md:p-24 transition-all duration-700 cubic-bezier(0.2, 1, 0.3, 1) ${activeArticle === index
+                                    ? 'opacity-100 translate-y-0 scale-100 z-10'
+                                    : 'opacity-0 translate-y-12 scale-95 z-0'
+                                 }`}
                            >
-                              {/* HUD Overlay */}
-                              <div className="absolute inset-0 z-30 pointer-events-none">
-                                 <div className="absolute top-4 left-4 flex gap-2">
-                                    <div className="w-2 h-2 bg-white/20"></div>
-                                    <div className="w-2 h-2 bg-white/20"></div>
+                              <div className="relative w-full aspect-video border border-white/10 bg-[#0A0A0A] shadow-[0_0_100px_rgba(108,92,231,0.05)] overflow-hidden group">
+                                 {/* HUD Overlays */}
+                                 <div className="absolute inset-0 z-30 pointer-events-none">
+                                    <div className="absolute top-4 left-4 flex gap-2">
+                                       <div className="w-1 h-4 bg-[#6C5CE7]"></div>
+                                       <div className="w-4 h-1 bg-[#6C5CE7]"></div>
+                                    </div>
+                                    <div className="absolute top-4 right-4 font-mono text-[10px] text-gray-500">
+                                       VIEWPORT_DATA::{article.code}
+                                    </div>
+                                    <div className="absolute bottom-4 left-4 font-mono text-[8px] text-gray-600 max-w-[150px]">
+                                       ESTADO: ARCHIVADO_Y_VERIFICADO
+                                       <br />
+                                       PROTOCOLO: {article.category}
+                                    </div>
+                                    <div className="absolute bottom-4 right-4 w-8 h-8 border-b border-r border-[#6C5CE7]/30"></div>
                                  </div>
-                                 <div className="absolute top-4 right-4 font-mono text-[10px] text-gray-500">
-                                    VIEWPORT_CAM_0{index + 1}
-                                 </div>
-                                 <div className="absolute bottom-4 left-4 w-32 h-[1px] bg-white/20"></div>
-                                 <div className="absolute bottom-4 right-4 w-4 h-4 border-b border-r border-white/20"></div>
+
+                                 {/* Image */}
+                                 <Link to={`/${article.slug}`} className="relative w-full h-full block">
+                                    <img
+                                       src={article.coverImage}
+                                       alt={article.title}
+                                       className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105"
+                                    />
+
+                                    {/* Scanline Effect */}
+                                    <div className="absolute top-0 left-0 w-full h-[1px] bg-[#6C5CE7]/30 shadow-[0_0_10px_#6C5CE7] animate-[scan_4s_linear_infinite] opacity-50"></div>
+
+                                    {/* Vignette */}
+                                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,rgba(5,5,5,0.8)_100%)] opacity-60"></div>
+                                 </Link>
                               </div>
 
-                              {/* Image */}
-                              <Link to={`/${article.slug}`} className="relative w-full aspect-video block">
-                                 <img
-                                    src={article.coverImage}
-                                    alt={article.title}
-                                    className="w-full h-full object-cover"
-                                 />
-
-                                 {/* Scanline */}
-                                 <div className={`absolute top-0 left-0 w-full h-[2px] bg-[#6C5CE7]/50 shadow-[0_0_20px_#6C5CE7] animate-[scan_3s_ease-in-out_infinite] ${activeArticle === index ? 'opacity-100' : 'opacity-0'}`}></div>
-
-                                 {/* Purple Gradient Overlay */}
-                                 <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-90"></div>
-                              </Link>
-
-                              {/* Floating Metadata */}
-                              <div className="absolute bottom-6 left-6 z-40">
-                                 <h2 className="font-space-grotesk font-bold text-2xl text-white leading-none tracking-tighter mix-blend-difference">
-                                    {article.category}
-                                 </h2>
-                                 <div className="mt-3 flex items-center gap-4 text-xs font-mono text-white/80 uppercase tracking-widest mix-blend-difference">
-                                    <div className="flex items-center gap-2">
-                                       <Hash size={12} />
-                                       <span>ID: {article.code}</span>
-                                    </div>
-                                    <div className="w-6 h-[1px] bg-white/50"></div>
-                                    <span>VERIFICADO</span>
+                              {/* Floating Info */}
+                              <div className={`absolute bottom-24 left-24 right-24 transition-all duration-1000 delay-300 ${activeArticle === index ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                                 <div className="flex items-center gap-4 text-xs font-mono text-[#6C5CE7] mb-2">
+                                    <span>0{index + 1}</span>
+                                    <div className="w-8 h-[1px] bg-[#6C5CE7]/30"></div>
+                                    <span>{article.category}</span>
                                  </div>
                               </div>
                            </div>
                         ))}
                      </div>
 
+                     {/* Right Side Vertical Ticker */}
+                     <div className="absolute right-6 top-1/2 -translate-y-1/2 flex flex-col gap-4">
+                        {displayArticles.map((_, i) => (
+                           <div
+                              key={i}
+                              className={`w-1 transition-all duration-500 ${activeArticle === i ? 'h-8 bg-[#6C5CE7]' : 'h-4 bg-gray-800'}`}
+                           ></div>
+                        ))}
+                     </div>
                   </div>
 
                </div>
