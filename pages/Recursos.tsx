@@ -202,10 +202,10 @@ export default function Recursos() {
                                  </div>
 
                                  {/* MOBILE IMAGE (Visible only on mobile) */}
-                                 <div className="lg:hidden w-full aspect-video overflow-hidden border border-white/10 relative">
+                                 <Link to={`/${article.slug}`} className="lg:hidden w-full aspect-video overflow-hidden border border-white/10 relative block">
                                     <img src={article.coverImage} alt={article.title} className="w-full h-full object-cover" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-[#050505] to-transparent opacity-60"></div>
-                                 </div>
+                                 </Link>
 
                                  {/* Title */}
                                  <h3 className="font-space-grotesk font-bold text-3xl md:text-5xl text-white leading-[1.05] group-hover:text-[#6C5CE7] transition-colors duration-300 max-w-xl">
@@ -219,7 +219,7 @@ export default function Recursos() {
                                     </p>
 
                                     <div className="inline-flex items-center gap-3 text-white font-mono text-xs uppercase tracking-widest border border-white/20 px-4 py-3 hover:bg-white hover:text-black transition-colors duration-300">
-                                       <Link to={`/recursos/${article.slug}`}>Leer Protocolo</Link>
+                                       <Link to={`/${article.slug}`}>Leer Artículo</Link>
                                        <ArrowRight size={14} className="transform group-hover:translate-x-1 transition-transform" />
                                     </div>
                                  </div>
@@ -239,74 +239,61 @@ export default function Recursos() {
 
                   </div>
 
-                  {/* RIGHT: THE VIEWPORT (Sticky Visual - Desktop Only) */}
-                  <div className="hidden lg:block lg:col-span-6 relative h-screen sticky top-0 bg-[#030303] overflow-hidden border-l border-white/5">
+                  {/* RIGHT: THE VIEWPORT (Scrollable Gallery - Desktop Only) */}
+                  <div className="hidden lg:block lg:col-span-6 relative h-screen sticky top-0 bg-[#030303] overflow-y-auto border-l border-white/5">
 
-                     {/* Visual Container */}
-                     <div className="absolute inset-0 flex items-center justify-center p-16">
-                        <div className="relative w-full h-full max-h-[800px] overflow-hidden border border-white/10 bg-[#0A0A0A] shadow-2xl">
-
-                           {/* HUD Overlay */}
-                           <div className="absolute inset-0 z-30 pointer-events-none">
-                              <div className="absolute top-4 left-4 flex gap-2">
-                                 <div className="w-2 h-2 bg-white/20"></div>
-                                 <div className="w-2 h-2 bg-white/20"></div>
-                              </div>
-                              <div className="absolute top-4 right-4 font-mono text-[10px] text-gray-500">
-                                 VIEWPORT_CAM_01
-                              </div>
-                              <div className="absolute bottom-4 left-4 w-32 h-[1px] bg-white/20"></div>
-                              <div className="absolute bottom-4 right-4 w-4 h-4 border-b border-r border-white/20"></div>
-
-                              {/* Crosshair */}
-                              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 border border-white/10 rounded-full flex items-center justify-center">
-                                 <div className="w-1 h-1 bg-white/50"></div>
-                              </div>
-                           </div>
-
-                           {/* Images */}
-                           {displayArticles.map((article, index) => (
-                              <div
-                                 key={index}
-                                 className={`absolute inset-0 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] transform ${activeArticle === index ? 'opacity-100' : 'opacity-0'}`}
-                              >
-                                 {/* Glitch/Scanline Effect Container */}
-                                 <div className="relative w-full h-full">
-                                    <img
-                                       src={article.coverImage}
-                                       alt={article.title}
-                                       className={`w-full h-full object-cover transition-transform duration-[2s] ease-out ${activeArticle === index ? 'scale-100 grayscale-0' : 'scale-110 grayscale'}`}
-                                    />
-
-                                    {/* Scanline */}
-                                    <div className={`absolute top-0 left-0 w-full h-[2px] bg-[#6C5CE7]/50 shadow-[0_0_20px_#6C5CE7] animate-[scan_3s_ease-in-out_infinite] ${activeArticle === index ? 'opacity-100' : 'opacity-0'}`}></div>
-
-                                    {/* Purple Gradient Overlay */}
-                                    <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-90"></div>
+                     {/* Images Gallery - Stacked Vertically */}
+                     <div className="flex flex-col gap-6 p-8">
+                        {displayArticles.map((article, index) => (
+                           <div
+                              key={index}
+                              className={`relative w-full overflow-hidden border border-white/10 bg-[#0A0A0A] shadow-2xl transition-all duration-300 ${activeArticle === index ? 'ring-2 ring-[#6C5CE7]' : 'opacity-70 hover:opacity-100'}`}
+                              onClick={() => setActiveArticle(index)}
+                           >
+                              {/* HUD Overlay */}
+                              <div className="absolute inset-0 z-30 pointer-events-none">
+                                 <div className="absolute top-4 left-4 flex gap-2">
+                                    <div className="w-2 h-2 bg-white/20"></div>
+                                    <div className="w-2 h-2 bg-white/20"></div>
                                  </div>
-                              </div>
-                           ))}
-
-                           {/* Floating Metadata (Sticky info inside the image) */}
-                           {displayArticles.length > 0 && displayArticles[activeArticle] && (
-                              <div className="absolute bottom-12 left-12 z-40">
-                                 <div className="overflow-hidden">
-                                    <h2 className="font-space-grotesk font-bold text-6xl text-white leading-none tracking-tighter mix-blend-difference">
-                                       {displayArticles[activeArticle].category}
-                                    </h2>
+                                 <div className="absolute top-4 right-4 font-mono text-[10px] text-gray-500">
+                                    VIEWPORT_CAM_0{index + 1}
                                  </div>
-                                 <div className="mt-6 flex items-center gap-6 text-xs font-mono text-white/80 uppercase tracking-widest mix-blend-difference">
+                                 <div className="absolute bottom-4 left-4 w-32 h-[1px] bg-white/20"></div>
+                                 <div className="absolute bottom-4 right-4 w-4 h-4 border-b border-r border-white/20"></div>
+                              </div>
+
+                              {/* Image */}
+                              <Link to={`/${article.slug}`} className="relative w-full aspect-video block">
+                                 <img
+                                    src={article.coverImage}
+                                    alt={article.title}
+                                    className="w-full h-full object-cover"
+                                 />
+
+                                 {/* Scanline */}
+                                 <div className={`absolute top-0 left-0 w-full h-[2px] bg-[#6C5CE7]/50 shadow-[0_0_20px_#6C5CE7] animate-[scan_3s_ease-in-out_infinite] ${activeArticle === index ? 'opacity-100' : 'opacity-0'}`}></div>
+
+                                 {/* Purple Gradient Overlay */}
+                                 <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-90"></div>
+                              </Link>
+
+                              {/* Floating Metadata */}
+                              <div className="absolute bottom-6 left-6 z-40">
+                                 <h2 className="font-space-grotesk font-bold text-2xl text-white leading-none tracking-tighter mix-blend-difference">
+                                    {article.category}
+                                 </h2>
+                                 <div className="mt-3 flex items-center gap-4 text-xs font-mono text-white/80 uppercase tracking-widest mix-blend-difference">
                                     <div className="flex items-center gap-2">
                                        <Hash size={12} />
-                                       <span>ID: {displayArticles[activeArticle].code}</span>
+                                       <span>ID: {article.code}</span>
                                     </div>
-                                    <div className="w-8 h-[1px] bg-white/50"></div>
-                                    <span>ESTADO: VERIFICADO</span>
+                                    <div className="w-6 h-[1px] bg-white/50"></div>
+                                    <span>VERIFICADO</span>
                                  </div>
                               </div>
-                           )}
-
-                        </div>
+                           </div>
+                        ))}
                      </div>
 
                   </div>

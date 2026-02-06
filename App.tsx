@@ -2,6 +2,8 @@ import React, { useEffect, Suspense } from 'react';
 import { NavigationMenu } from './components/NavigationMenu';
 import { Router, useLocation } from './src/lib/router';
 
+import { BLOG_POSTS } from './src/data/blog';
+
 // Lazy Load Pages
 const Home = React.lazy(() => import('./pages/Home'));
 const QueHacemos = React.lazy(() => import('./pages/QueHacemos'));
@@ -25,7 +27,13 @@ function Routes({ children }: { children: React.ReactNode }) {
   let match = routes.find((child) => React.isValidElement(child) && child.props.path === pathname) as React.ReactElement | undefined;
 
   if (!match) {
-    if (pathname.startsWith('/recursos/') && pathname.split('/').length > 2) {
+    // Check for blog post slugs at root level
+    const slug = pathname.startsWith('/') ? pathname.slice(1) : pathname;
+    const isBlogPost = BLOG_POSTS.some(p => p.slug === slug);
+
+    if (isBlogPost) {
+      match = routes.find((child) => React.isValidElement(child) && child.props.path === '/recursos/:slug') as React.ReactElement | undefined;
+    } else if (pathname.startsWith('/recursos/') && pathname.split('/').length > 2) {
       match = routes.find((child) => React.isValidElement(child) && child.props.path === '/recursos/:slug') as React.ReactElement | undefined;
     }
   }

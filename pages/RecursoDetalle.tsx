@@ -17,9 +17,9 @@ const BlockRenderer = ({ block }: { block: ContentBlock }) => {
         case "heading_3":
             return <h3 className="font-space-grotesk text-2xl md:text-3xl font-bold mb-4 mt-8 text-white">{content}</h3>;
         case "paragraph":
-            return <p className="font-jakarta text-gray-300 text-lg leading-relaxed mb-6">{content}</p>;
+            return <p className="font-jakarta text-gray-300 text-lg leading-relaxed mb-6" dangerouslySetInnerHTML={{ __html: content || "" }} />;
         case "bulleted_list_item":
-            return <li className="font-jakarta text-gray-300 text-lg leading-relaxed mb-2 ml-4 list-disc">{content}</li>;
+            return <li className="font-jakarta text-gray-300 text-lg leading-relaxed mb-2 ml-4 list-disc" dangerouslySetInnerHTML={{ __html: content || "" }} />;
         case "image":
             return (
                 <figure className="my-12">
